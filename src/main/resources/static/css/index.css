@@ -1,0 +1,58 @@
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    margin-top: 25px;
+}
+
+nav > button{
+    border: 2px solid #EE0815;
+    color: #EE0815;
+    height: 50px;
+    border-radius: 30px;
+    font-size: 16px;
+    width: 40%;
+    transition: background-color 1s;
+}
+
+#areaemple{
+    background-color: white;
+}
+#areaemple > a{
+    color: #EE0815;
+}
+
+#areacli{
+    background-color: #C95F00;
+}
+
+#areacli > a{
+    color: white;
+}
+
+#areacli:hover{
+    background-color: #EE0815;
+}
+#areaemple:hover{
+    background-color: #b6afaf;
+}
+
+main  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+main > div > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px;
+}
+
+
+
