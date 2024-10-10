@@ -1,7 +1,6 @@
 package com.example.cleanmaster.ServicioEmpleados.Repository;
 
 
-import com.example.cleanmaster.models.entities.EmpleadoEntities;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

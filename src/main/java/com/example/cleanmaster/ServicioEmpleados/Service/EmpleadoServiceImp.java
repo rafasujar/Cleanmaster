@@ -2,7 +2,6 @@ package com.example.cleanmaster.ServicioEmpleados.Service;
 
 import com.example.cleanmaster.ServicioEmpleados.Repository.EmpleadoRepository;
 import com.example.cleanmaster.models.dto.EmpleadoDTO;
-import com.example.cleanmaster.models.entities.EmpleadoEntities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
