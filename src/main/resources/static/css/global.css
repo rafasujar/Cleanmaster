@@ -21,9 +21,8 @@ img{
 }
 
 #background{
-    max-width: 392px;
     height: 195px;
-
+    width: 100%;
 }
 
 header{

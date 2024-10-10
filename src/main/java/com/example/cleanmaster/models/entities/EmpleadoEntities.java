@@ -1,14 +1,14 @@
 package com.example.cleanmaster.models.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "empleado")
 public class EmpleadoEntities {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -32,10 +32,8 @@ public class EmpleadoEntities {
     @Column(name = "idEncargada")
     private Integer idEncargada;
 
-
     @Column(name = "correo", nullable = false, length = 200)
     private String correo;
-
 
     @Column(name = "password", nullable = false, length = 15)
     private String password;

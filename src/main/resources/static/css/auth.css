@@ -2,17 +2,19 @@
 
 input[type="text"], input[type="password"]{
     height: 40px;
-    width: 100%;
+    width: 300px;
+    padding: 10px;
     border-radius: 30px;
 }
-h2{
-    text-align: center;
+
+#showerrors{
     color: darkred;
     display: none;
+    text-align: center;
 }
-
 button{
     align-self: center;
+    justify-self: center;
 }
 main > div > a {
     text-decoration-line: underline;
@@ -25,5 +27,6 @@ label{
 
 div {
     display: grid;
+    text-align: left;
 }
 

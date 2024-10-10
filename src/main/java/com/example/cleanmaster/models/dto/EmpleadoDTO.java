@@ -1,6 +1,5 @@
 package com.example.cleanmaster.models.dto;
 
-import com.example.cleanmaster.models.entities.EmpleadoEntities;
 import lombok.Data;
 
 @Data

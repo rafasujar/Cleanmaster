@@ -1,9 +1,11 @@
 package com.example.cleanmaster.models.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "direcciones")
 public class DireccionesEntities {
