@@ -15,35 +15,45 @@ window.addEventListener('load', function() {
 
               fetch('/AreaEmpleado/api/login', {
                   method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
+                      headers: {
+                      'Content-Type': 'application/json',
                   },
-                  body: JSON.stringify({
-                      correo: correo,
-                      password: password
-                  })
+                  body: JSON.stringify({ correo: correo, password: password }),
               }).then(function(response) {
                   console.log("Response status: " + response.status);
-                  console.log("response"+ JSON.stringify(response.json()));
+                  console.log("Response status text: " + response.statusText);
+                  console.log("Response type: " + response.type);
 
-                  if (response.ok) {
-                      return response.json();
-                  }
+
                   if (response.status === 404) {
-                        alerta('no se existe el usuario');
-                        document.getElementById('password').value = '';
+                      alerta('No existe el usuario');
+                      document.getElementById('password').value = '';
+                      return;
                   }
-
                   if (response.status === 400) {
-                      alerta('Correo y/o no cumplen con el formato');
+                      alerta('Correo y/o contraseña no cumplen con el formato');
                       document.getElementById('password').value = '';
                       document.getElementById('correo').value = '';
+                      return;
                   }
-              }).then(function(data) {
-                    alert('Bienvenido'+data.nombre);
-              }).catch(function(err) {
-                  alerta(err);
+
+                  if (response.status === 200) {
+
+                      return response.json();
+                  }
+                  throw new Error('Error en la respuesta: ' + response.status);
               })
+                  .then(function(data) {
+                      if (data) {
+                            console.log('Data: ' + JSON.stringify(data));
+                            sessionStorage.setItem('CM-token', data);
+                            window.location.href = '/AreaEmpleado/'+data.id+'/home';
+                      }
+                  })
+                  .catch(function(err) {
+                      console.error('Error: ' + err.message); // Capturar y mostrar errores
+                  });
+
 
           } else {
               alerta('Contraseña no cumple los caracteres mínimos 8 letras y un número');

@@ -1,5 +1,6 @@
 package com.example.cleanmaster.models.dto;
 
+import com.example.cleanmaster.models.entities.ReservarCitaEntities;
 import lombok.Data;
 
 import java.time.LocalDate;

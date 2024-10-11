@@ -2,7 +2,6 @@ package com.example.cleanmaster.ServicioEmpleados.RestApi;
 
 import com.example.cleanmaster.ServicioEmpleados.Service.EmpleadoService;
 import com.example.cleanmaster.models.dto.EmpleadoDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,7 @@ public class EmpleadoRestController {
 
     @PostMapping("/AreaEmpleado/api/login")
     public ResponseEntity loginEmpleado(@RequestBody EmpleadoDTO empleadoDTO2) {
-            System.out.println("EmpleadoDTO: " + empleadoDTO2.toString());
-            
+
             if (empleadoDTO2.getCorreo().isEmpty() && empleadoDTO2.getPassword().isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("El empleadodto2.getCorreo o la contraseña no pueden estar vacios");
@@ -36,20 +34,24 @@ public class EmpleadoRestController {
             }
 
 
-        try {
+            // sigue jugando con el optional para que te permita no fallar si no encuentra el empleado
+
            EmpleadoDTO empleadoDTO = empleadoService.logearEmpleado(empleadoDTO2.getCorreo(), empleadoDTO2.getPassword());
-            System.out.println("EmpleadoDTO: " + empleadoDTO.toString());
-            if (empleadoDTO != null) {
-                return ResponseEntity.ok(empleadoDTO);
-            }
-        } catch (NullPointerException e ) {
-            e.printStackTrace();
+           System.out.println(empleadoDTO.toString());
+            if (empleadoDTO.equals(null)) {
+                return ResponseEntity.ok("{" +
+                   "correo:'" + empleadoDTO.getCorreo() + "'," +
+                   "idEmpleado:'" + empleadoDTO.getId() + "'," +
+                   "nombre:'" + empleadoDTO.getNombre() + "'," +
+                   "apellido:'" + empleadoDTO.getApellidos() +
+                   "}");
+
+        } else {
+
+
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("El empleado no fue encontrado");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Error interno del servidor");
-
     }
 
 }
