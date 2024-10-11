@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 public class EmpleadoRestController {
 
@@ -36,22 +38,48 @@ public class EmpleadoRestController {
 
             // sigue jugando con el optional para que te permita no fallar si no encuentra el empleado
 
-           EmpleadoDTO empleadoDTO = empleadoService.logearEmpleado(empleadoDTO2.getCorreo(), empleadoDTO2.getPassword());
-           System.out.println(empleadoDTO.toString());
-            if (empleadoDTO.equals(null)) {
-                return ResponseEntity.ok("{" +
-                   "correo:'" + empleadoDTO.getCorreo() + "'," +
-                   "idEmpleado:'" + empleadoDTO.getId() + "'," +
-                   "nombre:'" + empleadoDTO.getNombre() + "'," +
-                   "apellido:'" + empleadoDTO.getApellidos() +
+           Optional<EmpleadoDTO> empleadoDTO = Optional.ofNullable(empleadoService.logearEmpleado(empleadoDTO2.getCorreo(), empleadoDTO2.getPassword()));
+            if (empleadoDTO.isPresent()) {
+                empleadoDTO2 = empleadoDTO.get();
+                System.out.println(empleadoDTO2.toString());
+                /*
+                                return ResponseEntity.ok("{" +
+                   "correo:'" + empleadoDTO2.getCorreo() + "'," +
+                   "idEmpleado:'" + empleadoDTO2.getId() + "'," +
+                   "nombre:'" + empleadoDTO2.getNombre() + "'," +
+                   "apellido:'" + empleadoDTO2.getApellidos() +
                    "}");
+                 */
+                return ResponseEntity.ok(STR."{correo:'\{empleadoDTO2.getCorreo()}',idEmpleado:'\{empleadoDTO2.getId()}',nombre:'\{empleadoDTO2.getNombre()}',apellido:'\{empleadoDTO2.getApellidos()}}");
 
         } else {
-
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("El empleado no fue encontrado");
         }
     }
 
+    @PostMapping("/AreaEmpleado/api/addEmpleado")
+    public ResponseEntity addEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
+        if (empleadoDTO.getCorreo().isEmpty() && empleadoDTO.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleado.getCorreo o la contraseña no pueden estar vacios");
+        }
+
+        if (!empleadoDTO.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleado.getCorreo no cumple con los requisitos de formato");
+        }
+
+        if (!empleadoDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La contraseña no cumple con los requisitos de seguridad");
+        }
+
+        if (empleadoService.Guardar(empleadoDTO)) {
+            return ResponseEntity.ok("Empleado añadido correctamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleado no pudo ser añadido");
+        }
+    }
 }
