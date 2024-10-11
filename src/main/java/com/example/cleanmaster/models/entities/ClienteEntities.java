@@ -2,8 +2,7 @@ package com.example.cleanmaster.models.entities;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 
 @Data
 @Entity
@@ -26,7 +25,5 @@ public class ClienteEntities {
     @Column(name = "movil", nullable = false, length = 15)
     private String movil;
 
-    @Column(name = "idDirecciones")
-    private Integer idDirecciones;
 
 }
