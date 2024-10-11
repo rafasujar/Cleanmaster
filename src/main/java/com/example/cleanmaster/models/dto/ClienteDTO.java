@@ -17,7 +17,7 @@ public class ClienteDTO {
 
     private String movil;
 
-    private Integer idDirecciones;
+
 
 
     public static ClienteDTO ConvertToDTO( ClienteEntities entities ){
@@ -27,7 +27,7 @@ public class ClienteDTO {
         clienteDTO.setCorreo(entities.getCorreo());
         clienteDTO.setPassword(entities.getPassword());
         clienteDTO.setMovil(entities.getMovil());
-        clienteDTO.setIdDirecciones(entities.getIdDirecciones());
+
         return clienteDTO;
     }
 
@@ -38,7 +38,7 @@ public class ClienteDTO {
         cliente.setCorreo(clienteDTO.getCorreo());
         cliente.setPassword(clienteDTO.getPassword());
         cliente.setMovil(clienteDTO.getMovil());
-        cliente.setIdDirecciones(clienteDTO.getIdDirecciones());
+
         return cliente;
     }
 
