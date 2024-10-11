@@ -14,7 +14,8 @@ public class EncargadoEntities {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "idEmpleados", nullable = false)
+
+    @Column(name = "id_Empleados")
     private Integer idEmpleados;
 
 }

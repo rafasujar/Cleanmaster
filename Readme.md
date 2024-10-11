@@ -1,5 +1,10 @@
 # Para hacer 
 - [x] Hacer entidades 
-- [ ] Reacer Dtos
-- [ ] Terminar parte de administrador
-- [ ] Terminar parte de cliente 
+- [x] Reacer Dtos
+- [ ] Login empleados 
+- [ ] Login clientes
+- [ ] registro clientes
+- [ ] mandar mensajes
+- [ ] mandar correos
+- [ ] mandar notificaciones
+- [ ] Crear pdf de facturas
