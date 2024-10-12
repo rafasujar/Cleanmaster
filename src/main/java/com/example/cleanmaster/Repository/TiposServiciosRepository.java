@@ -1,4 +1,4 @@
-package com.example.cleanmaster;
+package com.example.cleanmaster.Repository;
 
 import com.example.cleanmaster.models.entities.TiposServiciosEntities;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -12,5 +12,9 @@ public class IndexController {
     public ModelAndView Index(){
         return new ModelAndView("index.html");
     }
+    @GetMapping("/inicio")
+    public ModelAndView Inicio(){
+        return Index();
+    }
 
 }
