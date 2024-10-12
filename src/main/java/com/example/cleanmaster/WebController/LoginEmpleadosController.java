@@ -10,7 +10,19 @@ public class LoginEmpleadosController {
 
 @GetMapping("/areaempleados/auth")
     public ModelAndView LoginEmpleados(){
-        return new ModelAndView("./paginas/areaempleadosauth.html");
+        ModelAndView modelAndView =  new ModelAndView("./paginas/auth.html");
+        modelAndView.addObject("escliente", false);
+        modelAndView.addObject("apiUrl" , "/AreaEmpleado/api/login");
+        return modelAndView;
     }
 
+
+
+@GetMapping("/areaempleados/passwd")
+    public ModelAndView RecuperarPasswd(){
+    ModelAndView modelAndView =  new ModelAndView("./paginas/resetpasswd.html");
+    modelAndView.addObject("escliente", false);
+    modelAndView.addObject("apiUrl" , "/AreaEmpleado/api/resetpasswd");
+    return modelAndView;
+}
 }

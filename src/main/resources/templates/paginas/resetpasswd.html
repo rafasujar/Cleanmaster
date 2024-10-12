@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clean Master</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}" >
+  <link rel=" stylesheet" th:href="@{/css/index.css}" >
+  <link rel=" stylesheet" th:href="@{/css/auth.css}" >
+</head>
+
+<body>
+<header>
+  <img th:src="@{/img/background.png}" alt="background" id="background">
+  <div>
+    <img th:src="@{/img/logo.png}" id="logo" alt="logoempresa">
+    <nav>
+      <button id="areaemple">
+        <a th:href="@{/areaempleados/auth}">Area Empleados</a>
+      </button>
+      <button id="areacli">
+        <a th:href="@{/areaclientes/auth}">Area Clientes</a>
+      </button>
+    </nav>
+  </div>
+
+</header>
+<main>
+
+  <h1>
+    Bienvenid@ a Clean Masters
+  </h1>
+
+      <p id="showerrors"></p>
+
+  <div>
+    <input type="hidden" id="apiUrl" th:value="${apiUrl}" >
+    <label for="correo">Indica tu correo</label>
+    <input type="text" id="correo" name="correo" placeholder="Escribe tu correo">
+    <br>
+    <button id="submit" class="button-special" > <a>iniciar sesion</a> </button>
+    <br>
+    <p th:if="${escliente}">No tienes cuenta? <a th:href="@{/areaclientes/registro}">Registrarte</a></p>
+  </div>
+</main>
+<footer>
+  <img src="/img/logo.png" alt="logo">
+  <div>
+    <a th:href="@{/contactar}">Contacta con nosotros</a>
+    <a th:href="@{/terminos}">Terminos y condiciones</a>
+  </div>
+</footer>
+<script th:src="@{/js/global.js}">
+
+
+</script>
+<script type="text/javascript" th:src="@{/js/repasswd.js}"></script>
+</body>
+
+</html>
