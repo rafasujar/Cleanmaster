@@ -12,5 +12,5 @@ public interface ClienteRepository extends JpaRepository<ClienteEntities, Intege
 
     Optional<ClienteEntities> findByCorreoAndPassword(String correo, String password);
 
-    Optional<Object> findByCorreo(String correo);
+    Optional<ClienteEntities> findByCorreo(String correo);
 }

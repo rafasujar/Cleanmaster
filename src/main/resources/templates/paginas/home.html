@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html  lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clean Master</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}" >
+    <link rel=" stylesheet" th:href="@{/css/home.css}" >
+</head>
+
+<body>
+<header>
+  <img th:src="@{/img/background.png}" alt="background" id="background">
+  <div>
+    <img th:src="@{/img/logo.png}" id="logo" alt="logoempresa">
+  </div>
+
+</header>
+<main>
+  <h1>Bienvenid@s a Clean Master</h1>
+  <nav th:if="${escliente}">
+    <a id="btn-contacto" class="inactivo">contacto</a>
+    <a id="btn-agenda" class="activo">agenda</a>
+    <a id="btn-historial" class="inactivo">historial</a>
+    <a id="btn-direcciones" class="inactivo">direcciones</a>
+    <a id="btn-perfil" class="inactivo">perfil</a>
+  </nav>
+  <!--/*@thymesVar id="escliente" type="bolean"*/-->
+  <nav th:if="${!escliente}">
+    <!-- aqui va una bara lateral de scroll  -->
+    <a id="btn-contacto" class="inactivo">contacto</a>
+    <a id="btn-agenda" class="activo">agenda</a>
+    <a id="btn-perfil" class="inactivo">perfil</a>
+    <a id="btn-administrar" class="inactivo" th:if="${esencargado}">administrar</a>
+  </nav>
+  <hr>
+
+</main>
+<footer>
+  <img src="/img/logo.png" alt="logo">
+  <div>
+    <a th:href="@{/contactar}">Contacta con nosotros</a>
+    <a th:href="@{/terminos}">Terminos y condiciones</a>
+  </div>
+</footer>
+<script type="text/javascript" th:src="@{/js/global.js}"></script>
+ <script type="text/javascript" th:src="@{/js/home.js}"></script>
+</body>
+</html>

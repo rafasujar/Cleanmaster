@@ -22,4 +22,10 @@ public class LoginClientesController {
         modelAndView.addObject("apiUrl" , "/areacliente/api/resetpasswd");
         return modelAndView;
     }
+
+    @GetMapping("/areaclientes/registro")
+    public ModelAndView Registro(){
+        ModelAndView modelAndView =  new ModelAndView("./paginas/registro.html");
+        return modelAndView;
+    }
 }

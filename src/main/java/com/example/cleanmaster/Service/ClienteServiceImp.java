@@ -24,13 +24,13 @@ public class ClienteServiceImp implements ClienteService {
          clienteRepository.save(ClienteDTO.ConvertToEntities(clienteDTO));
     }
 
-    @Override
-    public void actualizarCliente(ClienteDTO clienteDTO) {
-       //no implementado
-    }
+
 
     @Override
-    public boolean existeCliente(String correo) {
-        return clienteRepository.findByCorreo(correo).isPresent();
+    public ClienteDTO existeCliente(String correo) {
+        if (clienteRepository.findByCorreo(correo).isPresent()) {
+            return ClienteDTO.ConvertToDTO(clienteRepository.findByCorreo(correo).get());
+        }
+        return null;
     }
 }

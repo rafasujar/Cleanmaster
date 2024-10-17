@@ -1,7 +1,12 @@
 
     let apiurl = document.querySelector("#apiUrl").value;
-    let correo = document.getElementById('correo').value;
 document.getElementById('submit').addEventListener('click', function() {
+    let correo = document.querySelector("#correo").value ;
+    alert('correo: ' + correo+'  &&  apiurl: '+apiurl);
+    if (correo === '') {
+        alerta('Debes ingresar un correo');
+        return;
+    }
 
     if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
         .test(correo)) {
@@ -10,7 +15,7 @@ document.getElementById('submit').addEventListener('click', function() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ correo: correo })
+            body: correo
         }).then(function(response) {
             alert(response.status);
             if (response.status === 404) {
@@ -28,8 +33,17 @@ document.getElementById('submit').addEventListener('click', function() {
             }
             throw new Error('Error en la respuesta: ' + response.status);
          }).then(function(data) {
-             document.querySelector("main ").innerHTML = "<h1>Se ha enviado un correo a tu cuenta restableciendo tu contraseña</h1>+<a th:href='${escliente} ? '@{/areaclientes/api/login}' : '@{/AreaEmpleado/api/login}'>Volver a inicio</a>";
-         })
+             console.log(JSON.stringify(data));
+             console.log(data.toString());
+             let respuesta = JSON.stringify(data);
+             if(data === true ){
+               alert('Correo enviado');
+                 let nombreArea = window.location.href.split("/")[3];
+                 let nuevaUrl = `/${nombreArea}/auth`;
+                document.querySelector("main").innerHTML = `<h1>Se ha restablecido la contraseña compruebe su correo </h1> <a href="${nuevaUrl}">Volver a iniciar sesion</a>`;
+           }
+
+         });
     }else {
         alerta('Correo no cumple con el formato');
     }

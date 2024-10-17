@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Optional;
+import java.util.Random;
 
 @RestController
 public class ClienteRestController {
@@ -51,6 +52,70 @@ public class ClienteRestController {
 
         }
     }
+
+    @PostMapping("/AreaCliente/api/resetpasswd")
+    public ResponseEntity<?> resepassword(@RequestBody String correo){
+        StringBuilder passwd = new StringBuilder();
+        Random random = new Random();
+        ClienteDTO clienteDTO;
+        if (correo.isEmpty()) {
+            return ResponseEntity.badRequest().body(false);
+        }
+
+
+        if (!correo.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(false);
+        }
+        Optional<ClienteDTO> clienteDTO1 = Optional.ofNullable(clienteService.existeCliente(correo));
+        if (clienteDTO1.isPresent()) {
+            clienteDTO = clienteDTO1.get();
+            for (int i = 0; i < 8; i++) {
+                passwd.append(random.nextInt(10));
+            }
+            clienteDTO.setPassword(passwd.toString());
+            clienteService.registrarCliente(clienteDTO);
+            return ResponseEntity.ok(true);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(false);
+        }
+    }
+
+
+    @PostMapping("/areaclientes/api/registro")
+    public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO clienteDTO){
+        String respuesta;
+        if (clienteDTO.getCorreo().isEmpty() && clienteDTO.getPassword().isEmpty() && clienteDTO.getNombre().isEmpty()) {
+            return ResponseEntity.badRequest().body("los campos estan vacios");
+        }
+        if (!clienteDTO.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El cliente no cumple con los requisitos de formato");
+        }
+        if (!clienteDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La contraseña no cumple con los requisitos de seguridad");
+        }
+        if (!clienteDTO.getMovil().matches("^[67]\\d{8}$")){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El movil no cumple con los requisitos de formato");
+        }
+
+        if (clienteService.existeCliente(clienteDTO.getCorreo()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("El cliente ya existe");
+        }
+        respuesta = "{" +
+                "\"empleado\": " + false + "," +
+                "\"correo\": \"" + clienteDTO.getCorreo() + "\"," +
+                "\"id\": " + clienteDTO.getId() + "," +
+                "\"nombre\": \"" + clienteDTO.getNombre() + "\"" +
+                "}";
+        clienteService.registrarCliente(clienteDTO);
+        return ResponseEntity.ok(respuesta);
+    }
+
 
 
 }
