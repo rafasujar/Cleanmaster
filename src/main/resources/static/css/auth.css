@@ -1,4 +1,4 @@
-input[type="text"], input[type="password"]{
+input[type="text"], input[type="password"], input[type="number"] {
     height: 40px;
     width: 300px;
     padding: 10px;
@@ -27,4 +27,11 @@ div {
     display: grid;
     text-align: left;
 }
+form {
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    height: 100%;
+}
+
 

@@ -68,11 +68,11 @@ public class EmpleadoRestController {
         StringBuilder passwd = new StringBuilder();
         Random random = new Random();
         EmpleadoDTO empleadoDTO2 ;
-        //comprobar que el correo tiene el formato correcto
+
 
         if (!correo.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("El correo no cumple con los requisitos de formato");
+                    .body(false);
         }
 
         //comprobar que el correo existe en la base de datos
@@ -80,10 +80,9 @@ public class EmpleadoRestController {
 
         if (empleadoDTO.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("El correo no existe en la base de datos");
+                    .body(false);
         }
         empleadoDTO2 = empleadoDTO.get();
-
         //generar una nueva contraseña
         for (int i = 0; i < 8; i++) {
             passwd.append((char) (random.nextInt(26) + 65));
@@ -93,12 +92,10 @@ public class EmpleadoRestController {
         empleadoDTO2.setPassword(passwd.toString());
         empleadoService.Guardar(empleadoDTO2);
         mailService.resetPassword(correo, passwd.toString());
-
-
-
-        return ResponseEntity.ok("Correo enviado");
+        return ResponseEntity.ok(true);
 
     }
+
 /*
    @DeleteMapping("/AreaEmpleado/api/eliminarEmpleado")
     public ResponseEntity<?> logoutEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {

@@ -37,7 +37,6 @@ document.getElementById('submit').addEventListener('click', function() {
 
 
                     if (response.status === 200) {
-                        alert('Bienvenido');
                         return response.json();
                     }
                     throw new Error('Error en la respuesta: ' + response.status);
@@ -49,7 +48,7 @@ document.getElementById('submit').addEventListener('click', function() {
                     let nombreArea = window.location.href.split("/")[3];
 
 
-                    let nuevaUrl = `/${nombreArea}/${data.id}/home`;
+                    let nuevaUrl = `/${nombreArea}/home/${data.id}`;
                     window.location.replace(nuevaUrl);
 
 

@@ -6,8 +6,7 @@ public interface ClienteService {
 
     ClienteDTO logearCliente(ClienteDTO clienteDTO);
     void registrarCliente(ClienteDTO clienteDTO);
-    void actualizarCliente(ClienteDTO clienteDTO);
-    boolean existeCliente(String correo);
+    ClienteDTO existeCliente(String correo);
 
 
 
