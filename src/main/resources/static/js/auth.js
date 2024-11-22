@@ -42,12 +42,10 @@ document.getElementById('submit').addEventListener('click', function() {
                     throw new Error('Error en la respuesta: ' + response.status);
                 }).then( async function(data) {
 
-                      sessionStorage.setItem('CM-token',  await data);
-
-
+                    let expiryDate = new Date();
+                    expiryDate.setDate(expiryDate.getDate() + 7);
+                    document.cookie = 'CM-token=' + JSON.stringify(data) + '; expires=' + expiryDate.toUTCString() + '; path=/';
                     let nombreArea = window.location.href.split("/")[3];
-
-
                     let nuevaUrl = `/${nombreArea}/home/${data.id}`;
                     window.location.replace(nuevaUrl);
 

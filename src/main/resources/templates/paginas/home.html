@@ -19,23 +19,21 @@
 </header>
 <main>
   <h1>Bienvenid@s a Clean Master</h1>
-  <nav th:if="${escliente}">
+  <nav>
     <a id="btn-contacto" class="inactivo">contacto</a>
     <a id="btn-agenda" class="activo">agenda</a>
-    <a id="btn-historial" class="inactivo">historial</a>
-    <a id="btn-direcciones" class="inactivo">direcciones</a>
-    <a id="btn-perfil" class="inactivo">perfil</a>
-  </nav>
-  <!--/*@thymesVar id="escliente" type="bolean"*/-->
-  <nav th:if="${!escliente}">
-    <!-- aqui va una bara lateral de scroll  -->
-    <a id="btn-contacto" class="inactivo">contacto</a>
-    <a id="btn-agenda" class="activo">agenda</a>
+    <a id="btn-historial" th:if="${escliente}" class="inactivo">historial</a>
+    <a id="btn-direcciones"  th:if="${escliente}" class="inactivo">direcciones</a>
     <a id="btn-perfil" class="inactivo">perfil</a>
     <a id="btn-administrar" class="inactivo" th:if="${esencargado}">administrar</a>
   </nav>
   <hr>
+  <div id="agenda">
+    <p th:if="${escliente}">Esta semana tienen reservado </p>
+    <p th:if="${!escliente}">tu agenda semanal</p>
 
+
+  </div>
 </main>
 <footer>
   <img src="/img/logo.png" alt="logo">

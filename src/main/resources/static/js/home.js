@@ -8,9 +8,6 @@ window.addEventListener('load', function() {
     contacto.addEventListener('click', function() {
         activarBoton(contacto);
         alert(window.location.pathname)
-
-
-
     });
 
 
