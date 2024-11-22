@@ -58,14 +58,13 @@ document.querySelector('#submit').addEventListener('click', function() {
                         })
                         .then(async function (data) {
                             if (typeof data !== 'string') {
-                                console.log("passed");
-                                sessionStorage.setItem('CM-token', await data);
+                                let expiryDate = new Date();
+                                expiryDate.setDate(expiryDate.getDate() + 7);
+                                document.cookie = 'CM-token=' + JSON.stringify(data) + '; expires=' + expiryDate.toUTCString() + '; path=/';
                                 let nuevaUrl = `/areaclientes/home/${data.id}`;
-
                                 window.location.replace(nuevaUrl);
                             }
-                        })
-                        .catch(function(err) {
+                        }).catch(function(err) {
                             console.error('Error: ' + err.message);
                         });
                 } else {
