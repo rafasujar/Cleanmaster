@@ -18,7 +18,7 @@ document.getElementById('submit').addEventListener('click', function() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ correo: correo, password: password }),
+                    body: JSON.stringify({ correo: correo, password: btoa(password) }),
                 }).then(function(response) {
 
 
@@ -37,16 +37,16 @@ document.getElementById('submit').addEventListener('click', function() {
 
 
                     if (response.status === 200) {
-                        return response.json();
+                        return response.text();
                     }
                     throw new Error('Error en la respuesta: ' + response.status);
                 }).then( async function(data) {
-
-                    let expiryDate = new Date();
-                    expiryDate.setDate(expiryDate.getDate() + 7);
-                    document.cookie = 'CM-token=' + JSON.stringify(data) + '; expires=' + expiryDate.toUTCString() + '; path=/';
+                    console.log(atob(data));
+                    console.log(data);
+                    let user = atob(data)
+                    sessionStorage.setItem( 'CM-token' , data );
                     let nombreArea = window.location.href.split("/")[3];
-                    let nuevaUrl = `/${nombreArea}/home/${data.id}`;
+                    let nuevaUrl = `/${nombreArea}/home/${user.id}`;
                     window.location.replace(nuevaUrl);
 
 

@@ -31,7 +31,16 @@
   <div id="agenda">
     <p th:if="${escliente}">Esta semana tienen reservado </p>
     <p th:if="${!escliente}">tu agenda semanal</p>
-
+    <select id="semana">
+      <option value="0">Todos los dias </option>
+      <option value="1">Lunes</option>
+      <option value="2">Martes</option>
+        <option value="3">Miercoles</option>
+        <option value="4">Jueves</option>
+        <option value="5">Viernes</option>
+        <option value="6">Sabado</option>
+        <option value="7">Domingo</option>
+      </select>
 
   </div>
 </main>

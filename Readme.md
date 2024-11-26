@@ -9,4 +9,4 @@
 - [ ] mandar notificaciones
 - [ ] Crear pdf de facturas
 - [ ] perfil de usuario
-- [ ]
+- [ ] que cuando se me tenga el docker se cree la base de datos y cree las reservas y mensajes de prueba de esa semana 
