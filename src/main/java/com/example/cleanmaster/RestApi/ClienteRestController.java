@@ -1,7 +1,9 @@
 package com.example.cleanmaster.RestApi;
 
 import com.example.cleanmaster.Service.ClienteService;
+import com.example.cleanmaster.Service.MailService;
 import com.example.cleanmaster.models.dto.ClienteDTO;
+import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Base64;
 import java.util.Optional;
 import java.util.Random;
 
@@ -17,6 +20,8 @@ public class ClienteRestController {
 
     @Autowired
     private ClienteService clienteService;
+    @Autowired
+    private MailService mailService;
 
     @PostMapping("/areaclientes/api/login")
     public ResponseEntity<?> login(@RequestBody ClienteDTO clienteDTO) {
@@ -24,10 +29,12 @@ public class ClienteRestController {
         if (clienteDTO.getCorreo().isEmpty() && clienteDTO.getPassword().isEmpty()) {
             return ResponseEntity.badRequest().body("El correo o la contraseña no pueden estar vacios");
         }
+        clienteDTO.setPassword(utilsCleanMaster.decoderUser(clienteDTO.getPassword()));
         if (!clienteDTO.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El cliente no cumple con los requisitos de formato");
         }
+
         if (!clienteDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("La contraseña no cumple con los requisitos de seguridad");
@@ -45,7 +52,7 @@ public class ClienteRestController {
                     "}";
 
             System.out.println(respuesta);
-            return ResponseEntity.ok(respuesta);
+            return ResponseEntity.ok(utilsCleanMaster.encodeUser(respuesta));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("El cliente no fue encontrado");
@@ -68,18 +75,19 @@ public class ClienteRestController {
                     .body(false);
         }
         Optional<ClienteDTO> clienteDTO1 = Optional.ofNullable(clienteService.existeCliente(correo));
-        if (clienteDTO1.isPresent()) {
-            clienteDTO = clienteDTO1.get();
-            for (int i = 0; i < 8; i++) {
-                passwd.append(random.nextInt(10));
-            }
-            clienteDTO.setPassword(passwd.toString());
-            clienteService.registrarCliente(clienteDTO);
-            return ResponseEntity.ok(true);
-        } else {
+        if (clienteDTO1.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(false);
         }
+        clienteDTO = clienteDTO1.get();
+        for (int i = 0; i < 8; i++) {
+            passwd.append(random.nextInt(10));
+        }
+            clienteDTO.setPassword(passwd.toString());
+            clienteService.registrarCliente(clienteDTO);
+            mailService.resetPassword(correo, passwd.toString());
+            return ResponseEntity.ok(true);
+
     }
 
 
@@ -93,7 +101,7 @@ public class ClienteRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El cliente no cumple con los requisitos de formato");
         }
-        if (!clienteDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+        if (!utilsCleanMaster.decoderUser(clienteDTO.getPassword()).matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("La contraseña no cumple con los requisitos de seguridad");
         }
@@ -113,7 +121,7 @@ public class ClienteRestController {
                 "\"nombre\": \"" + clienteDTO.getNombre() + "\"" +
                 "}";
         clienteService.registrarCliente(clienteDTO);
-        return ResponseEntity.ok(respuesta);
+        return ResponseEntity.ok(utilsCleanMaster.encodeUser(respuesta));
     }
 
 

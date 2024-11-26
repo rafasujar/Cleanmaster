@@ -8,8 +8,4 @@ public interface ClienteService {
     void registrarCliente(ClienteDTO clienteDTO);
     ClienteDTO existeCliente(String correo);
 
-
-
-
-
 }

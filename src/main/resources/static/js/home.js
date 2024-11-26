@@ -1,29 +1,32 @@
 window.addEventListener('load', function() {
-  let contacto = document.querySelector("#btn-contacto");
-  let agenda = document.querySelector("#btn-agenda");
-  let historial = document.querySelector("#btn-historial");
-  let direcciones = document.querySelector("#btn-direcciones");
-  let perfil = document.querySelector("#btn-perfil");
+    const navLinks = document.querySelectorAll('nav a');
 
-    contacto.addEventListener('click', function() {
-        activarBoton(contacto);
-        alert(window.location.pathname)
+    navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+            event.preventDefault();
+            navLinks.forEach(otherLink => {
+                otherLink.classList.remove('activo');
+                otherLink.classList.add('inactivo');
+            });
+
+            const clickedLink = event.target;
+            clickedLink.classList.remove('inactivo');
+            clickedLink.classList.add('activo');
+
+            switch (clickedLink.id) {
+                case 'btn-agenda':
+
+
+
+                    break;
+
+            }
+
+        });
     });
-
-
-
-
 
 });
 
-function activarBoton(boton) {
-    document.querySelector(("nav a")).forEach(a => {
-        a.removeClass("activo");
-        a.addClass("incativo");
-    });
-    boton.removeClass("inactivo");
-    boton.addClass("activo");
-}
 
 
 function crearElementoTexto(tag, contenido,padre) {

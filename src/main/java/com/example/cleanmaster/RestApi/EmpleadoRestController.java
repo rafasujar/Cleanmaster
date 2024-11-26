@@ -3,11 +3,13 @@ package com.example.cleanmaster.RestApi;
 import com.example.cleanmaster.Service.EmpleadoService;
 import com.example.cleanmaster.Service.MailService;
 import com.example.cleanmaster.models.dto.EmpleadoDTO;
+import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
 import java.util.Optional;
 import java.util.Random;
 
@@ -53,8 +55,7 @@ public class EmpleadoRestController {
                         "\"apellido\": \"" + empleadoDTO2.getApellidos() + "\"" +
                         "}";
                 System.out.println(respuesta);
-                return ResponseEntity.ok(respuesta);
-
+                return ResponseEntity.ok(utilsCleanMaster.encodeUser(respuesta));
 
 
             } else {
@@ -62,6 +63,8 @@ public class EmpleadoRestController {
                     .body("El empleado no fue encontrado");
         }
     }
+
+
 
     @PostMapping("/AreaEmpleado/api/resetpasswd")
     public ResponseEntity<?> resepassword(@RequestBody String correo){
@@ -96,15 +99,5 @@ public class EmpleadoRestController {
 
     }
 
-/*
-   @DeleteMapping("/AreaEmpleado/api/eliminarEmpleado")
-    public ResponseEntity<?> logoutEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
-        return ResponseEntity.ok(empleadoService.eliminarEmpleado(empleadoDTO.getId()));
-    }
-    @PutMapping("/AreaEmpleado/api/actualizarEmpleado")
-    public ResponseEntity<?> actualizarEmpleado(@RequestBody EmpleadoDTO empleadoDTO) {
-        empleadoService.update(empleadoDTO, empleadoDTO.getId());
-        return ResponseEntity.ok("Empleado actualizado");
 
-    }*/
 }

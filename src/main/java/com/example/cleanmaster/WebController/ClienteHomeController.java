@@ -16,7 +16,6 @@ public class ClienteHomeController {
         ModelAndView modelAndView = new ModelAndView("./paginas/home.html");
         modelAndView.addObject("escliente", "true");
         return modelAndView;
-        System.out.println();
     }
 
 
