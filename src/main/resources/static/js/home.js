@@ -15,9 +15,27 @@ window.addEventListener('load', function() {
 
             switch (clickedLink.id) {
                 case 'btn-agenda':
+                    fetch({
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: sessionStorage.getItem('CM-TOKEN')
+                    }).then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Error en la llamada a la API');
+                        }
+                    }).then(data => {
+                        document.querySelector('div#agenda').innerHTML = '';
+                        data.forEach(reserva => {
+                            let div = crearElemento('div', document.querySelector('div#agenda'));
 
-
-
+                        });
+                    }).catch(error => {
+                        console.error(error);
+                    });
                     break;
 
             }

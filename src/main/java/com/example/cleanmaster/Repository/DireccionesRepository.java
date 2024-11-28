@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DireccionesRepository extends JpaRepository<DireccionesEntities, Integer> {
+    DireccionesEntities getDireccionesEntitiesById(Integer id);
 }
