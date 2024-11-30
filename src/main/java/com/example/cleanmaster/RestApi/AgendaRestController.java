@@ -1,5 +1,6 @@
 package com.example.cleanmaster.RestApi;
 
+import com.example.cleanmaster.Service.DireccionesService;
 import com.example.cleanmaster.Service.ReservarCitaService;
 import com.example.cleanmaster.Service.TiposServiciosService;
 import com.example.cleanmaster.models.dto.ReservarCitaDTO;
@@ -19,6 +20,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -29,7 +31,7 @@ public class AgendaRestController {
     private TiposServiciosService tiposServiciosService;
 
     @Autowired
-    private
+    private DireccionesService direccionesService;
 
     @PostMapping("/api/agenda/veragenda/semana")
     public ResponseEntity<?> verAgenda(@RequestBody String token) throws JsonProcessingException {
@@ -37,15 +39,16 @@ public class AgendaRestController {
         if (token.isEmpty()){
             return ResponseEntity.badRequest().body("empty token ");
         }
-        String respuesta;
         ObjectMapper mapper = new ObjectMapper();
-        ArrayNode lunes = mapper.createArrayNode();
-        ArrayNode martes = mapper.createArrayNode();
-        ArrayNode miercoles = mapper.createArrayNode();
-        ArrayNode jueves = mapper.createArrayNode();
-        ArrayNode viernes = mapper.createArrayNode();
-        ArrayNode sabado = mapper.createArrayNode();
-        ArrayNode domingo = mapper.createArrayNode();
+        Map<DayOfWeek, ArrayNode> reservas = Map.of(
+                DayOfWeek.MONDAY, mapper.createArrayNode(),
+                DayOfWeek.TUESDAY, mapper.createArrayNode(),
+                DayOfWeek.WEDNESDAY, mapper.createArrayNode(),
+                DayOfWeek.THURSDAY, mapper.createArrayNode(),
+                DayOfWeek.FRIDAY, mapper.createArrayNode(),
+                DayOfWeek.SATURDAY, mapper.createArrayNode(),
+                DayOfWeek.SUNDAY, mapper.createArrayNode()
+        );
         //obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
         //obtener el lunes de la semana actual
@@ -66,32 +69,55 @@ public class AgendaRestController {
                             mapjson.put("id", reservarCitaDTO.getId());
                             mapjson.put("fecha", "Lunes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
                             mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
-                            mapjson.put("direccion",  );
-                            lunes.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.MONDAY).add(mapjson);
                             break;
                         case TUESDAY:
-                            martes.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Martes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.TUESDAY).add(mapjson);
                             break;
                         case WEDNESDAY:
-                            miercoles.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Miercoles, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion() );
+                            reservas.get(DayOfWeek.WEDNESDAY).add(mapjson);
                             break;
                         case THURSDAY:
-                            jueves.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Jueves, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.THURSDAY).add(mapjson);
                             break;
                         case FRIDAY:
-                            viernes.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Viernes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.FRIDAY).add(mapjson);
                             break;
                         case SATURDAY:
-                            sabado.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Sabado, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.SATURDAY).add(mapjson);
                             break;
                         case SUNDAY:
-                            domingo.add(mapper.valueToTree(reservarCitaDTO));
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Domingo, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.SUNDAY).add(mapjson);
                             break;
                     }
                 }
-            respuesta = " as";
 
-                return ResponseEntity.ok(respuesta);
+                return ResponseEntity.ok(reservas);
             }else {
 
                 return ResponseEntity.status(404).body("No hay reservas para este empleado");
@@ -102,10 +128,62 @@ public class AgendaRestController {
             Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.ofNullable(reservarCitaService.reservasPorClienteEntreLunesYDomingo(jsonNodeRoot.get("id").asInt(), monday, sunday));
             if (reservarCitaDTOList.isPresent()) {
 
-                return ResponseEntity.ok(reservarCitaDTOList.get());
+                for (ReservarCitaDTO reservarCitaDTO : reservarCitaDTOList.get()) {
+                    ObjectNode mapjson = mapper.createObjectNode();
+                    switch (reservarCitaDTO.getFecha().getDayOfWeek()){
+                        case MONDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Lunes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.MONDAY).add(mapjson);
+                            break;
+                        case TUESDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Martes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.TUESDAY).add(mapjson);
+                            break;
+                        case WEDNESDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Miercoles, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion() );
+                            reservas.get(DayOfWeek.WEDNESDAY).add(mapjson);
+                            break;
+                        case THURSDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Jueves, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.THURSDAY).add(mapjson);
+                            break;
+                        case FRIDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Viernes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.FRIDAY).add(mapjson);
+                            break;
+                        case SATURDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Sabado, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.SATURDAY).add(mapjson);
+                            break;
+                        case SUNDAY:
+                            mapjson.put("id", reservarCitaDTO.getId());
+                            mapjson.put("fecha", "Domingo, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
+                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            mapjson.put("direccion", direccionesService.getDireccionById(reservarCitaDTO.getIdDireccion()).getDireccion());
+                            reservas.get(DayOfWeek.SUNDAY).add(mapjson);
+                            break;
+                    }
+                }
 
-
-
+                return ResponseEntity.ok(reservas);
             }else {
                 return ResponseEntity.status(404).body("No hay reservas para este empleado");
             }
