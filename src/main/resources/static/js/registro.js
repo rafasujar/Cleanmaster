@@ -40,7 +40,7 @@ document.querySelector('#submit').addEventListener('click', function() {
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({ correo: correo, password: password, nombre: nombre, movil: telefono.toString() }),
+                        body: JSON.stringify({ correo: correo, password: btoa(password) , nombre: nombre, movil: telefono.toString() }),
                     })
                         .then(function(response) {
                             if (response.status === 400) {
@@ -58,10 +58,7 @@ document.querySelector('#submit').addEventListener('click', function() {
                         })
                         .then(async function (data) {
                             if (typeof data !== 'string') {
-                                let expiryDate = new Date();
-                                expiryDate.setDate(expiryDate.getDate() + 7);
-                                document.cookie = 'CM-token=' + JSON.stringify(data) + '; expires=' + expiryDate.toUTCString() + '; path=/';
-                                let nuevaUrl = `/areaclientes/home/${data.id}`;
+                                let nuevaUrl = `/areaclientes/auth`;
                                 window.location.replace(nuevaUrl);
                             }
                         }).catch(function(err) {

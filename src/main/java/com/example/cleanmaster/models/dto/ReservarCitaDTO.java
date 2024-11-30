@@ -30,7 +30,7 @@ public class ReservarCitaDTO {
         dto.setIdEmpleado(entities.getIdEmpleado());
         dto.setFecha(entities.getFecha());
         dto.setIdTipoServicio(entities.getIdTipoServicio());
-        dto.setDireccion(entities.getDireccion());
+        dto.setIdDireccion(entities.getIdDireccion());
         dto.setEspecificaciones(entities.getEspecificaciones());
         return dto;
     }
@@ -42,7 +42,7 @@ public class ReservarCitaDTO {
         entities.setIdEmpleado(dto.getIdEmpleado());
         entities.setFecha(dto.getFecha());
         entities.setIdTipoServicio(dto.getIdTipoServicio());
-        entities.setDireccion(dto.getDireccion());
+        entities.setIdDireccion(dto.getIdDireccion());
         entities.setEspecificaciones(dto.getEspecificaciones());
         return entities;
     }
