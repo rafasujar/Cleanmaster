@@ -18,7 +18,7 @@ public class ReservarCitaDTO {
 
     private Integer idTipoServicio;
 
-    private String direccion;
+    private Integer idDireccion;
 
     private String especificaciones;
 
