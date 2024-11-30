@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Base64;
 import java.util.Optional;
 import java.util.Random;
 
@@ -93,7 +92,7 @@ public class ClienteRestController {
 
     @PostMapping("/areaclientes/api/registro")
     public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO clienteDTO){
-        String respuesta;
+
         if (clienteDTO.getCorreo().isEmpty() && clienteDTO.getPassword().isEmpty() && clienteDTO.getNombre().isEmpty()) {
             return ResponseEntity.badRequest().body("los campos estan vacios");
         }
@@ -114,14 +113,9 @@ public class ClienteRestController {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body("El cliente ya existe");
         }
-        respuesta = "{" +
-                "\"empleado\": " + false + "," +
-                "\"correo\": \"" + clienteDTO.getCorreo() + "\"," +
-                "\"id\": " + clienteDTO.getId() + "," +
-                "\"nombre\": \"" + clienteDTO.getNombre() + "\"" +
-                "}";
+
         clienteService.registrarCliente(clienteDTO);
-        return ResponseEntity.ok(utilsCleanMaster.encodeUser(respuesta));
+        return ResponseEntity.ok(true);
     }
 
 

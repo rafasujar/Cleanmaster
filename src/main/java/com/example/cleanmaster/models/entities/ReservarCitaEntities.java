@@ -26,7 +26,7 @@ public class ReservarCitaEntities {
     @Column(name = "idTipoServicio", nullable = false)
     private Integer idTipoServicio;
 
-    @Column(name = "IdDireccion", nullable = false, length = 200)
+    @Column(name = "idDireccion", nullable = false, length = 200)
     private Integer idDireccion;
 
     @Column(name = "especificaciones", length = 200)

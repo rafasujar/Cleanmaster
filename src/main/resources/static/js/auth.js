@@ -41,8 +41,7 @@ document.getElementById('submit').addEventListener('click', function() {
                     }
                     throw new Error('Error en la respuesta: ' + response.status);
                 }).then( async function(data) {
-                    console.log(atob(data));
-                    console.log(data);
+
                     let user = atob(data)
                     sessionStorage.setItem( 'CM-token' , data );
                     let nombreArea = window.location.href.split("/")[3];
