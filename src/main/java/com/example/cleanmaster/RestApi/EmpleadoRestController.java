@@ -36,12 +36,11 @@ public class EmpleadoRestController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("El empleadodto2.getCorreo no cumple con los requisitos de formato");
             }
-
+            empleadoDTO2.setPassword(utilsCleanMaster.decoderUser(empleadoDTO2.getPassword()));
             if (!empleadoDTO2.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("La contraseña no cumple con los requisitos de seguridad");
             }
-
 
            Optional<EmpleadoDTO> empleadoDTO = Optional.ofNullable(empleadoService.logearEmpleado(empleadoDTO2.getCorreo(), empleadoDTO2.getPassword()));
             if (empleadoDTO.isPresent()) {
@@ -92,7 +91,7 @@ public class EmpleadoRestController {
         }
         passwd.append(random.nextInt(10));
 
-        empleadoDTO2.setPassword(passwd.toString());
+        empleadoDTO2.setPassword(utilsCleanMaster.encodeUser(passwd.toString()));
         empleadoService.Guardar(empleadoDTO2);
         mailService.resetPassword(correo, passwd.toString());
         return ResponseEntity.ok(true);

@@ -12,7 +12,7 @@ document.getElementById('submit').addEventListener('click', function() {
 
             if (/^(?=.*\d)[a-zA-Z\d]{8,}$/
                 .test(password)) {
-
+                alert('hola mundo')
                 fetch(apiurl, {
                     method: 'POST',
                     headers: {

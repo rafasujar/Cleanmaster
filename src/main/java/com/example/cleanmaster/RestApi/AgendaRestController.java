@@ -50,6 +50,7 @@ public class AgendaRestController {
                 DayOfWeek.SATURDAY, mapper.createArrayNode(),
                 DayOfWeek.SUNDAY, mapper.createArrayNode()
         );
+
         //obtener la fecha actual
         LocalDate fechaActual = LocalDate.now();
         //obtener el lunes de la semana actual

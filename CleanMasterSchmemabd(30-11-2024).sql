@@ -1,8 +1,12 @@
 -- Crear la base de datos y definir el conjunto de caracteres
 CREATE DATABASE IF NOT EXISTS `CleanMaster` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `CleanMaster`;
+-- Crear Usuario
+    CREATE USER 'CleanMaster'@'%' IDENTIFIED VIA mysql_native_password USING '1234';
+    GRANT ALL PRIVILEGES ON *.* TO 'CleanMaster'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+    GRANT ALL PRIVILEGES ON `CleanMaster`.* TO 'CleanMaster'@'%';
 
--- Tabla: cliente
+                                               -- Tabla: cliente
 DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE IF NOT EXISTS `cliente` (
                                          `id` INT(11) NULL AUTO_INCREMENT,
@@ -12,17 +16,17 @@ CREATE TABLE IF NOT EXISTS `cliente` (
     `movil` VARCHAR(15) NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `correo` (`correo`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: direcciones
 DROP TABLE IF EXISTS `direcciones`;
 CREATE TABLE IF NOT EXISTS `direcciones` (
-                                             `id` INT(11) NULL AUTO_INCREMENT,
+    `id` INT(11) NULL AUTO_INCREMENT,
     `idCliente` INT(11) NULL,  -- Permitir NULL en lugar de NULL
     `direccion` VARCHAR(200) NULL,
     PRIMARY KEY (`id`),
     KEY `idCliente` (`idCliente`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: empleado
 DROP TABLE IF EXISTS `empleado`;
@@ -39,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `empleado` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `correo` (`correo`),
     KEY `idEncargada` (`idEncargada`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: empleado_tiposServicios
 DROP TABLE IF EXISTS `empleado_tiposServicios`;
@@ -50,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `empleado_tiposServicios` (
     PRIMARY KEY (`id`),
     KEY `idEmpleado` (`idEmpleado`),
     KEY `idTipoServicio` (`idTipoServicio`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: ENCARGADO
 DROP TABLE IF EXISTS `ENCARGADO`;
@@ -59,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `ENCARGADO` (
     `idEmpleado` INT(11) NULL,  -- Permitir NULL en lugar de NULL
     PRIMARY KEY (`id`),
     KEY `idEmpleado` (`idEmpleado`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: mensaje
 DROP TABLE IF EXISTS `mensaje`;
@@ -72,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `mensaje` (
     PRIMARY KEY (`id`),
     KEY `idCliente` (`idCliente`),
     KEY `idEmpleado` (`idEmpleado`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: reservarCita
 DROP TABLE IF EXISTS `reservarCita`;
@@ -89,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `reservarCita` (
     KEY `idEmpleado` (`idEmpleado`),
     KEY `idTipoServicio` (`idTipoServicio`),
     KEY `idDireccion` (`idDireccion`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Tabla: tiposServicios
 DROP TABLE IF EXISTS `tiposServicios`;
@@ -97,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `tiposServicios` (
                                                 `id` INT(11) NULL AUTO_INCREMENT,
     `nombre` VARCHAR(50) NULL,
     PRIMARY KEY (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Relaciones (Claves Foráneas)
 ALTER TABLE `direcciones`
@@ -126,6 +130,5 @@ ALTER TABLE `reservarCita`
 
 
 
--- Aplicar los cambios
-FLUSH PRIVILEGES;
+
 commit ;

@@ -28,12 +28,11 @@ public class ClienteRestController {
         if (clienteDTO.getCorreo().isEmpty() && clienteDTO.getPassword().isEmpty()) {
             return ResponseEntity.badRequest().body("El correo o la contraseña no pueden estar vacios");
         }
-        clienteDTO.setPassword(utilsCleanMaster.decoderUser(clienteDTO.getPassword()));
         if (!clienteDTO.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El cliente no cumple con los requisitos de formato");
         }
-
+        clienteDTO.setPassword(utilsCleanMaster.decoderUser(clienteDTO.getPassword()));
         if (!clienteDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("La contraseña no cumple con los requisitos de seguridad");
@@ -82,7 +81,7 @@ public class ClienteRestController {
         for (int i = 0; i < 8; i++) {
             passwd.append(random.nextInt(10));
         }
-            clienteDTO.setPassword(passwd.toString());
+            clienteDTO.setPassword(utilsCleanMaster.encodeUser(passwd.toString()));
             clienteService.registrarCliente(clienteDTO);
             mailService.resetPassword(correo, passwd.toString());
             return ResponseEntity.ok(true);
