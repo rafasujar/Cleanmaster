@@ -1,5 +1,6 @@
 window.addEventListener('load', function() {
     const navLinks = document.querySelectorAll('nav a');
+    const iframe = document.querySelector('iframe');
 
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
@@ -15,27 +16,25 @@ window.addEventListener('load', function() {
 
             switch (clickedLink.id) {
                 case 'btn-agenda':
-                    fetch({
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: sessionStorage.getItem('CM-TOKEN')
-                    }).then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            throw new Error('Error en la llamada a la API');
-                        }
-                    }).then(data => {
-                        document.querySelector('div#agenda').innerHTML = '';
-                        data.forEach(reserva => {
-                            let div = crearElemento('div', document.querySelector('div#agenda'));
+                    iframe.src = location.href + '/veragenda';
+                    break;
+                case 'btn-contacto':
+                    iframe.src = location.href + '/contacto';
+                    break;
+                case 'btn-historial':
+                    iframe.src = location.href + '/historial';
+                    break;
+                case 'btn-direcciones':
+                    iframe.src = location.href + '/direcciones';
+                    break;
+                case 'btn-perfil':
+                    iframe.src = location.href + '/perfil';
+                    break;
+                case 'btn-administrar':
+                    iframe.src = location.href + '/administrar';
+                    break;
+                default:
 
-                        });
-                    }).catch(error => {
-                        console.error(error);
-                    });
                     break;
 
             }
