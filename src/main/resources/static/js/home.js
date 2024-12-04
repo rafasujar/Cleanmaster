@@ -17,6 +17,14 @@ window.addEventListener('load', function() {
             switch (clickedLink.id) {
                 case 'btn-agenda':
                     iframe.src = location.href + '/veragenda';
+                    iframe.onload = function() {
+                        if (iframe.contentDocument.querySelector('a#generardireccion') !== null) {
+                            iframe.contentDocument.querySelector('a#generardireccion').addEventListener('click', function () {
+                                const input = iframe.contentDocument.querySelector('input');
+                                alert(encodeURI("https://www.google.com/maps/search/?api=1&query=" + input.value));
+                            });
+                        }
+                    }
                     break;
                 case 'btn-contacto':
                     iframe.src = location.href + '/contacto';
@@ -41,7 +49,9 @@ window.addEventListener('load', function() {
 
         });
     });
-    document.querySelector("a#btn-agenda").click();
+
+
+
 });
 
 

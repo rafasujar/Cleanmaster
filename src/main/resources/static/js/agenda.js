@@ -27,12 +27,15 @@ window.addEventListener('load', function() {
             div.style.display = 'flex';
             div.style.flexDirection = 'column';
             div.classList.add('border-especial');
+            div.id = "reserva_id#"+servicio.id;
             crearElementoTexto("h4",servicio.fecha,div);
             crearElementoTexto("p","Tipo de servicio: "+servicio.tipo ,div);
             if (servicio.empleado === true){
                 crearElementoTexto("p","Cliente: "+servicio.cliente ,div);
                 crearElementoTexto("p", "movil: "+servicio.movil, div);
-                crearElementoTexto("p","hacer click aqui para mostrar direccion",div);
+                let a = crearElemento("a",div);
+                a.innerText = "Pulse para ver la dirección";
+                a.id = "generardireccion";
                 let input = crearElemento("input",div);
                 input.type = "hidden";
                 input.value = servicio.direccion;
