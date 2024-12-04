@@ -13,8 +13,10 @@ import java.util.Optional;
 public interface TiposServiciosRepository extends JpaRepository<TiposServiciosEntities, Integer> {
 
     @Override
-    Optional<TiposServiciosEntities> findById(Integer integer);
+    Optional<TiposServiciosEntities> findById(Integer id);
 
     @Override
     List<TiposServiciosEntities> findAll();
+
+    Optional<TiposServiciosEntities> getTiposServiciosEntitiesById(int id);
 }

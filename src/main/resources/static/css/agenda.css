@@ -1,0 +1,19 @@
+body{
+    padding: 10px;
+}
+
+header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+main>div{
+    display: flex;
+    flex-direction: column;
+}
+.border-especial{
+    border: 1px black dotted;
+    padding: 10px;
+    margin: 10px;
+}

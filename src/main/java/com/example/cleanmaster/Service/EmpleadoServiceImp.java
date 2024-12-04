@@ -48,6 +48,11 @@ public class EmpleadoServiceImp implements  EmpleadoService {
     }
 
     @Override
+    public EmpleadoDTO findById(Integer id) {
+        return empleadoRepository.findById(id).map(EmpleadoDTO::ConvertToDTO).orElse(null);
+    }
+
+    @Override
     public EmpleadoDTO existsByCorreo(String correo) {
         Optional<EmpleadoEntities> empleadoEntities = empleadoRepository.findByCorreo(correo);
         if (empleadoEntities.isPresent()){

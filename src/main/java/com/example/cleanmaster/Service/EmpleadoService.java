@@ -10,7 +10,7 @@ public interface EmpleadoService {
     public void eliminarEmpleado(Integer id);
     public void update(EmpleadoDTO empleadoDTO);
     public EmpleadoDTO logearEmpleado(String correo, String password);
-
+    EmpleadoDTO findById(Integer id);
     EmpleadoDTO existsByCorreo(String correo);
 
 }

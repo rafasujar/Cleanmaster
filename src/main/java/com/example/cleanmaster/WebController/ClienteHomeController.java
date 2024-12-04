@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ClienteHomeController {
-
     @GetMapping("/areaclientes/home/{id}")
     public ModelAndView homeCliente() {
         ModelAndView modelAndView = new ModelAndView("./paginas/home.html");

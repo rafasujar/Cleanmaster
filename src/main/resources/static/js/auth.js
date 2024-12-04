@@ -12,7 +12,6 @@ document.getElementById('submit').addEventListener('click', function() {
 
             if (/^(?=.*\d)[a-zA-Z\d]{8,}$/
                 .test(password)) {
-                alert('hola mundo')
                 fetch(apiurl, {
                     method: 'POST',
                     headers: {
@@ -41,11 +40,13 @@ document.getElementById('submit').addEventListener('click', function() {
                     }
                     throw new Error('Error en la respuesta: ' + response.status);
                 }).then( async function(data) {
-                    let d =  atob(data)
-                    d = d .replace("/", "\"");
-                    d = d.replace("+",":");
-                    let user =  JSON.parse(d);
-                    sessionStorage.setItem( 'CM-token' , await data );
+                    let d =  data;
+                    sessionStorage.setItem( 'CM-token' ,  await d );
+                    d = atob(await d);
+                    d = d.replace(/\//g, " \" ");
+                    d = d.replace(/\+/g, ":");
+                    console.log(d);
+                    let user =  d.trim();
                     let nombreArea = window.location.href.split("/")[3];
                     let nuevaUrl = `/${nombreArea}/home/${user.id}`;
                     window.location.replace(nuevaUrl);

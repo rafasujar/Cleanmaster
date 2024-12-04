@@ -33,4 +33,9 @@ public class ClienteServiceImp implements ClienteService {
         }
         return null;
     }
+
+    @Override
+    public ClienteDTO findById(Integer id) {
+        return clienteRepository.findById(id).map(ClienteDTO::ConvertToDTO).orElse(null);
+    }
 }

@@ -5,14 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clean Master</title>
-    <link rel="stylesheet" th:href="@{/css/global.css}" >
     <link rel=" stylesheet" th:href="@{/css/agenda.css}" >
 </head>
 
 <body>
     <header>
-        <p th:if="${escliente}">Esta semana tienen reservado </p>
-        <p th:if="${!escliente}">tu agenda semanal</p>
+        <h2 th:if="${escliente}">Esta semana tienen reservado </h2>
+        <h2 th:if="${!escliente}">tu agenda semanal</h2>
         <select id="semana">
             <option value="0">Todos los dias </option>
             <option value="1">Lunes</option>
@@ -25,9 +24,13 @@
         </select>
     </header>
     <main>
-
-
-
+        <div id="1"><h4>Lunes:</h4></div>
+        <div id="2"><h4>Martes:</h4></div>
+        <div id="3"><h4>Miercoles</h4></div>
+        <div id="4"><h4>Jueves:</h4></div>
+        <div id="5"><h4>Viernes:</h4></div>
+        <div id="6"><h4>Sabado:</h4></div>
+        <div id="7"><h4>Domingo:</h4></div>
     </main>
 </body>
 <script th:src="@{/js/agenda.js}"></script>

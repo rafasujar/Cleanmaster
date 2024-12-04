@@ -7,5 +7,5 @@ public interface ClienteService {
     ClienteDTO logearCliente(ClienteDTO clienteDTO);
     void registrarCliente(ClienteDTO clienteDTO);
     ClienteDTO existeCliente(String correo);
-
+    ClienteDTO findById(Integer id);
 }

@@ -7,9 +7,12 @@ import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
 import java.util.Optional;
 import java.util.Random;
 
@@ -39,7 +42,8 @@ public class ClienteRestController {
 
         if (clienteDTO1.isPresent()) {
             clienteDTO  = clienteDTO1.get();
-            return ResponseEntity.ok(utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre()));
+            String respuesta = utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre());
+            return ResponseEntity.ok(respuesta);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("El cliente no fue encontrado");
@@ -107,5 +111,13 @@ public class ClienteRestController {
     }
 
 
+    @GetMapping("/loadCliente")
+    public ModelAndView load() {
+        ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
+        ClienteDTO clienteDTO = clienteService.findById(1);
+        String token =  utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre());
+        modelAndView.addObject("token", token);
+        return modelAndView;
+    }
 
 }
