@@ -7,26 +7,26 @@ import java.time.LocalDate;
 
 @Data
 @Entity
-@Table(name = "reservarCita")
+@Table(name = "reservar_cita")
 public class ReservarCitaEntities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "idCliente", nullable = false)
+    @Column(name = "id_Cliente", nullable = false)
     private Integer idCliente;
 
-    @Column(name = "idEmpleado", nullable = false)
+    @Column(name = "id_Empleado", nullable = false)
     private Integer idEmpleado;
 
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
-    @Column(name = "idTipoServicio", nullable = false)
+    @Column(name = "id_Tipo_Servicio", nullable = false)
     private Integer idTipoServicio;
 
-    @Column(name = "idDireccion", nullable = false, length = 200)
+    @Column(name = "id_Direccion", nullable = false, length = 200)
     private Integer idDireccion;
 
     @Column(name = "especificaciones", length = 200)

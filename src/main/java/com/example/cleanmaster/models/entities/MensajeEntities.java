@@ -13,10 +13,10 @@ public class MensajeEntities {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "idCliente", nullable = false)
+    @Column(name = "id_cliente", nullable = false)
     private Integer idCliente;
 
-    @Column(name = "idEmpleado", nullable = false)
+    @Column(name = "id_empleado", nullable = false)
     private Integer idEmpleado;
 
     @Column(name = "asunto", nullable = false, length = 100)

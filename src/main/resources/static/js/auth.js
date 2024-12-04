@@ -41,14 +41,14 @@ document.getElementById('submit').addEventListener('click', function() {
                     }
                     throw new Error('Error en la respuesta: ' + response.status);
                 }).then( async function(data) {
-
-                    let user = atob(data)
-                    sessionStorage.setItem( 'CM-token' , data );
+                    let d =  atob(data)
+                    d = d .replace("/", "\"");
+                    d = d.replace("+",":");
+                    let user =  JSON.parse(d);
+                    sessionStorage.setItem( 'CM-token' , await data );
                     let nombreArea = window.location.href.split("/")[3];
                     let nuevaUrl = `/${nombreArea}/home/${user.id}`;
                     window.location.replace(nuevaUrl);
-
-
                 }).catch(function(err) {
                         console.error('Error: ' + err.message);
                         console.log(err.toString());

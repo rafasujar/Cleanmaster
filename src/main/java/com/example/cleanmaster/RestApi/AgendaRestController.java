@@ -4,6 +4,7 @@ import com.example.cleanmaster.Service.DireccionesService;
 import com.example.cleanmaster.Service.ReservarCitaService;
 import com.example.cleanmaster.Service.TiposServiciosService;
 import com.example.cleanmaster.models.dto.ReservarCitaDTO;
+import com.example.cleanmaster.models.dto.TiposServiciosDTO;
 import com.example.cleanmaster.utils.utilsCleanMaster;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -35,11 +36,11 @@ public class AgendaRestController {
 
     @PostMapping("/api/agenda/veragenda/semana")
     public ResponseEntity<?> verAgenda(@RequestBody String token) throws JsonProcessingException {
-
         if (token.isEmpty()){
             return ResponseEntity.badRequest().body("empty token ");
         }
-        
+        System.out.println(token);
+
         ObjectMapper mapper = new ObjectMapper();
         Map<DayOfWeek, ArrayNode> reservas = Map.of(
                 DayOfWeek.MONDAY, mapper.createArrayNode(),
@@ -132,7 +133,8 @@ public class AgendaRestController {
                         case MONDAY:
                             mapjson.put("id", reservarCitaDTO.getId());
                             mapjson.put("fecha", "Lunes, "+reservarCitaDTO.getFecha().getDayOfMonth()+" de "+reservarCitaDTO.getFecha().getMonth()+" de "+reservarCitaDTO.getFecha().getYear());
-                            mapjson.put("tipo de servicio", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                            TiposServiciosDTO tiposServiciosDTO =  tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio());
+                            mapjson.put("tipo de servicio",tiposServiciosDTO.getNombre());
                             break;
                         case TUESDAY:
                             mapjson.put("id", reservarCitaDTO.getId());
@@ -172,7 +174,7 @@ public class AgendaRestController {
                             break;
                     }
                 }
-                return ResponseEntity.ok(reservas);
+                return ResponseEntity.status(200).body(reservas);
             }else {
                 return ResponseEntity.status(404).body("No hay reservas para este empleado");
             }

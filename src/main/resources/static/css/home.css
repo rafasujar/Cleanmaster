@@ -33,12 +33,13 @@ nav > a:hover {
 }
 
 .activo {
-    color: blackblack;
+    color: black;
 }
 
 .inactivo {
     color: #7d7d7d;
 }
 
-
-
+iframe{
+    width: 90%;
+}

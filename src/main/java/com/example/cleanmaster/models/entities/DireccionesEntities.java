@@ -12,7 +12,7 @@ public class DireccionesEntities {
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "idCliente", nullable = false)
+    @Column(name = "id_Cliente", nullable = false)
     private Integer idCliente;
 
     @Column(name = "direccion", nullable = false, length = 200)

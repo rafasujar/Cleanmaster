@@ -2,6 +2,7 @@ package com.example.cleanmaster.Service;
 
 import com.example.cleanmaster.Repository.TiposServiciosRepository;
 import com.example.cleanmaster.models.dto.TiposServiciosDTO;
+import com.example.cleanmaster.models.entities.TiposServiciosEntities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,11 @@ public class TiposServiciosServiceImp implements TiposServiciosService {
 
     @Override
     public TiposServiciosDTO getTipoById(Integer id) {
-        Optional<TiposServiciosDTO> servicios = Optional.of( tiposServiciosRepository.getTiposServiciosEntitiesById(id));
-        return servicios.orElse(null);
+        Optional<TiposServiciosEntities> servicios =  tiposServiciosRepository.getTiposServiciosEntitiesById(id);
+        if (servicios.isPresent())
+            return TiposServiciosDTO.ConvertToDTO(servicios.get());
+        else
+            return null;
     }
 
     @Override

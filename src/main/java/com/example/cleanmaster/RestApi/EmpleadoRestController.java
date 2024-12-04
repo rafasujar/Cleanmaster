@@ -46,15 +46,7 @@ public class EmpleadoRestController {
             if (empleadoDTO.isPresent()) {
                 empleadoDTO2 = empleadoDTO.get();
 
-                respuesta = "{" +
-                        "\"empleado\": " + true + "," +
-                        "\"correo\": \"" + empleadoDTO2.getCorreo() + "\"," +
-                        "\"id\": " + empleadoDTO2.getId() + "," +
-                        "\"nombre\": \"" + empleadoDTO2.getNombre() + "\"," +
-                        "\"apellido\": \"" + empleadoDTO2.getApellidos() + "\"" +
-                        "}";
-                System.out.println(respuesta);
-                return ResponseEntity.ok(utilsCleanMaster.encodeUser(respuesta));
+                return ResponseEntity.ok(utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre()+" "+empleadoDTO2.getApellidos()));
 
 
             } else {
@@ -91,7 +83,7 @@ public class EmpleadoRestController {
         }
         passwd.append(random.nextInt(10));
 
-        empleadoDTO2.setPassword(utilsCleanMaster.encodeUser(passwd.toString()));
+        empleadoDTO2.setPassword(utilsCleanMaster.encodeBase64(passwd.toString()));
         empleadoService.Guardar(empleadoDTO2);
         mailService.resetPassword(correo, passwd.toString());
         return ResponseEntity.ok(true);

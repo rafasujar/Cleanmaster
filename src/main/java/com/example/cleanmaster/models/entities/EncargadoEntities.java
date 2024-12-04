@@ -13,7 +13,7 @@ public class EncargadoEntities {
     private Integer id;
 
 
-    @Column(name = "id_Empleados")
+    @Column(name = "id_empleado")
     private Integer idEmpleados;
 
 }
