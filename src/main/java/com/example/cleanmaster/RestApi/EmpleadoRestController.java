@@ -2,7 +2,6 @@ package com.example.cleanmaster.RestApi;
 
 import com.example.cleanmaster.Service.EmpleadoService;
 import com.example.cleanmaster.Service.MailService;
-import com.example.cleanmaster.models.dto.ClienteDTO;
 import com.example.cleanmaster.models.dto.EmpleadoDTO;
 import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Base64;
 import java.util.Optional;
 import java.util.Random;
 
@@ -27,7 +25,6 @@ public class EmpleadoRestController {
     @PostMapping("/AreaEmpleado/api/login")
     public ResponseEntity<?> loginEmpleado(@RequestBody EmpleadoDTO empleadoDTO2) {
 
-        String respuesta;
 
             if (empleadoDTO2.getCorreo().isEmpty() && empleadoDTO2.getPassword().isEmpty()) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -38,8 +35,8 @@ public class EmpleadoRestController {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("El empleadodto2.getCorreo no cumple con los requisitos de formato");
             }
-
-            if (!utilsCleanMaster.decodeBase54(empleadoDTO2.getPassword()).matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+            empleadoDTO2.setPassword(utilsCleanMaster.decodeBase54(empleadoDTO2.getPassword()));
+            if (!empleadoDTO2.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("La contraseña no cumple con los requisitos de seguridad");
             }
@@ -94,7 +91,7 @@ public class EmpleadoRestController {
     @GetMapping("/loadEmpleado")
     public ModelAndView load() {
         ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
-        EmpleadoDTO empleadoDTO2 = empleadoService.findById(1);
+        EmpleadoDTO empleadoDTO2 = empleadoService.findById(2);
         String token =  utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre()+" "+empleadoDTO2.getApellidos());
         modelAndView.addObject("token", token);
         return modelAndView;

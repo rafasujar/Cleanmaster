@@ -1,6 +1,7 @@
 window.addEventListener('load', function() {
     const navLinks = document.querySelectorAll('nav a');
     const iframe = document.querySelector('iframe');
+    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
 
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
@@ -9,7 +10,6 @@ window.addEventListener('load', function() {
                 otherLink.classList.remove('activo');
                 otherLink.classList.add('inactivo');
             });
-
             const clickedLink = event.target;
             clickedLink.classList.remove('inactivo');
             clickedLink.classList.add('activo');
@@ -17,14 +17,19 @@ window.addEventListener('load', function() {
             switch (clickedLink.id) {
                 case 'btn-agenda':
                     iframe.src = location.href + '/veragenda';
-                    iframe.onload = function() {
-                        if (iframe.contentDocument.querySelector('a#generardireccion') !== null) {
-                            iframe.contentDocument.querySelector('a#generardireccion').addEventListener('click', function () {
-                                const input = iframe.contentDocument.querySelector('input');
-                                alert(encodeURI("https://www.google.com/maps/search/?api=1&query=" + input.value));
+                    setTimeout(function () {
+                        const links = iframeDoc.querySelectorAll('a#generardireccion');
+                        if (links.length > 0) {
+                            links.forEach(link => {
+                                link.addEventListener('click', function (e) {
+                                    e.preventDefault(); // Evita el comportamiento predeterminado si es necesario.
+                                    console.log(link);
+                                    alert('¡Enlace clicado!');
+                                });
                             });
                         }
-                    }
+                    });
+
                     break;
                 case 'btn-contacto':
                     iframe.src = location.href + '/contacto';
@@ -49,7 +54,7 @@ window.addEventListener('load', function() {
 
         });
     });
-
+    document.querySelector("a#btn-agenda").click();
 
 
 });

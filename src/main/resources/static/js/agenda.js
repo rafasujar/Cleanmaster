@@ -39,6 +39,7 @@ window.addEventListener('load', function() {
                 let input = crearElemento("input",div);
                 input.type = "hidden";
                 input.value = servicio.direccion;
+
             }else{
                 crearElementoTexto("p", "Asistente: "+servicio.asistente, div);
             }
@@ -64,6 +65,8 @@ window.addEventListener('load', function() {
 
 
     });
+
+
 
 });
 

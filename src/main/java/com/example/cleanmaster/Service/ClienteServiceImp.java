@@ -2,8 +2,12 @@ package com.example.cleanmaster.Service;
 
 import com.example.cleanmaster.Repository.ClienteRepository;
 import com.example.cleanmaster.models.dto.ClienteDTO;
+import com.example.cleanmaster.models.entities.ClienteEntities;
+import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ClienteServiceImp implements ClienteService {
@@ -13,8 +17,13 @@ public class ClienteServiceImp implements ClienteService {
 
     @Override
     public ClienteDTO logearCliente(ClienteDTO clienteDTO) {
-        if (clienteRepository.findByCorreoAndPassword(clienteDTO.getCorreo(), clienteDTO.getPassword()).isPresent()) {
-            return ClienteDTO.ConvertToDTO(clienteRepository.findByCorreoAndPassword(clienteDTO.getCorreo(), clienteDTO.getPassword()).get());
+        Optional<ClienteEntities> clienteEntities = clienteRepository.findByCorreo(clienteDTO.getCorreo());
+        if (clienteEntities.isPresent()) {
+            ClienteEntities cliente = clienteEntities.get();
+            String password = utilsCleanMaster.decodeBase54(cliente.getPassword());
+            if (password.equals(clienteDTO.getPassword())) {
+                return ClienteDTO.ConvertToDTO(cliente);
+            }
         }
         return null;
     }

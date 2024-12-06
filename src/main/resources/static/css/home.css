@@ -1,3 +1,6 @@
+::-webkit-scrollbar{
+    width: 0;
+}
 main{
     display: flex;
     flex-direction: column;
@@ -41,5 +44,18 @@ nav > a:hover {
 }
 
 iframe{
-    width: 90%;
+    width: 100%;
+    border: none;
+    height: 100%;
 }
+
+.hola{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.8); /* Color de fondo (negro semi-transparente) */
+    z-index: 9999; /* Asegura que esté encima de todo */
+}
+

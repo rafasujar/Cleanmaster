@@ -4,12 +4,13 @@ import com.example.cleanmaster.models.dto.EmpleadoDTO;
 
 import java.util.List;
 
+
 public interface EmpleadoService {
-    public List<EmpleadoDTO> findAll();
-    public void Guardar(EmpleadoDTO empleadoDTO);
-    public void eliminarEmpleado(Integer id);
-    public void update(EmpleadoDTO empleadoDTO);
-    public EmpleadoDTO logearEmpleado(String correo, String password);
+    List<EmpleadoDTO> findAll();
+    void Guardar(EmpleadoDTO empleadoDTO);
+    void eliminarEmpleado(Integer id);
+    void update(EmpleadoDTO empleadoDTO);
+    EmpleadoDTO logearEmpleado(String correo, String password);
     EmpleadoDTO findById(Integer id);
     EmpleadoDTO existsByCorreo(String correo);
 

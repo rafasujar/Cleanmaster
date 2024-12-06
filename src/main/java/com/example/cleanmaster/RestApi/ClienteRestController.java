@@ -33,7 +33,8 @@ public class ClienteRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El cliente no cumple con los requisitos de formato");
         }
-        if (!utilsCleanMaster.decodeBase54(clienteDTO.getPassword()).matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+        clienteDTO.setPassword(utilsCleanMaster.decodeBase54(clienteDTO.getPassword()));
+        if (!clienteDTO.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("La contraseña no cumple con los requisitos de seguridad");
         }

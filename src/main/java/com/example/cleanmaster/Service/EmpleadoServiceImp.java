@@ -3,6 +3,7 @@ package com.example.cleanmaster.Service;
 import com.example.cleanmaster.Repository.EmpleadoRepository;
 import com.example.cleanmaster.models.dto.EmpleadoDTO;
 import com.example.cleanmaster.models.entities.EmpleadoEntities;
+import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,8 +44,19 @@ public class EmpleadoServiceImp implements  EmpleadoService {
 
     @Override
     public EmpleadoDTO logearEmpleado(String correo, String password) {
-        Optional<EmpleadoEntities> empleadoEntities =  empleadoRepository.findByCorreoAndPassword(correo, password);
-        return empleadoEntities.map(EmpleadoDTO::ConvertToDTO).orElse(null);
+       Optional< EmpleadoEntities> user = empleadoRepository.findByCorreo(correo);
+        if (user.isPresent()) {
+
+
+        EmpleadoEntities entity = user.get();
+        String decodepass = utilsCleanMaster.decodeBase54(entity.getPassword());
+            System.out.println("decodepass: [" + decodepass + "]");
+            System.out.println("password: [" + password + "]");
+        if (decodepass.equals(password)) {
+            return EmpleadoDTO.ConvertToDTO(entity);
+        }
+        }
+        return null;
     }
 
     @Override

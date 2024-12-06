@@ -42,7 +42,8 @@ document.getElementById('submit').addEventListener('click', function() {
                 }).then( async function(data) {
                     let d =  data;
                     sessionStorage.setItem( 'CM-token' ,  await d );
-                    d = atob(await d);
+                    d = atob(d);
+                    console.log(d)
                     d = d.replace(/\//g, " \" ");
                     d = d.replace(/\+/g, ":");
                     console.log(d);
