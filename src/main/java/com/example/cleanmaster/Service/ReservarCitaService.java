@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface ReservarCitaService {
     List<ReservarCitaDTO> reservasPorClienteEntreLunesYDomingo(Integer idCliente, LocalDate lunes, LocalDate domingo);
    List<ReservarCitaDTO> reservasPorEmpleadosEntreLunesYDomingo(Integer idEmpleado, LocalDate lunes, LocalDate domingo);
+   boolean finalizarReserva(Integer idReserva,Integer idEmpleado);
 }

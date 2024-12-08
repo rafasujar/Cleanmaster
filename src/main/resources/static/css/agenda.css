@@ -1,17 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
 body{
     padding: 10px;
 }
 
-header{
+#header{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
 }
 
-main>div{
+#main, main, div#main > div{
     display: flex;
     flex-direction: column;
 }
+
+
 .border-especial{
     border: 1px black dotted;
     padding: 10px;

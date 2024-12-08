@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -98,19 +99,54 @@ public class AgendaRestController {
 
         return ResponseEntity.ok(reservas);
     }
-/*
-    @PostMapping("/api/agenda/reservarcita")
-    public ResponseEntity<?> reservarCita(@RequestBody String token) throws JsonProcessingException {
+
+    @PostMapping("/api/agenda/reservarfinalizada")
+    public ResponseEntity<?> reservarFinalizada(@RequestBody String token) throws JsonProcessingException {
         if (token.isEmpty()) {
             return ResponseEntity.badRequest().body("empty token ");
         }
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNodeRoot = mapper.readTree(utilsCleanMaster.decoderUser(token));
+        JsonNode responseJson = mapper.readTree(token);
+        if(responseJson.get("token").asText().isEmpty()){
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        JsonNode jsonNodeRoot = mapper.readTree(utilsCleanMaster.decoderUser(responseJson.get("token").asText()));
         if (jsonNodeRoot.get("empleado").asBoolean()) {
-            return ResponseEntity.badRequest().body("Solo los clientes pueden reservar citas");
-        } else {
-
+            if (reservarCitaService.finalizarReserva(responseJson.get("id").asInt(), jsonNodeRoot.get("id").asInt())) {
+                return ResponseEntity.ok("Reserva finalizada");
+            }else{
+                    return ResponseEntity.badRequest().body("No tienes permisos para finalizar reservas");
+                }
+        }else{
+            return ResponseEntity.badRequest().body("No tienes permisos para finalizar reservas");
         }
 
-*/
+    }
+
+
+    @GetMapping("/api/obtenerTiposServicios")
+    public ResponseEntity<?> obtenerTiposServicios() {
+        return ResponseEntity.ok(tiposServiciosService.getAllTipos());
+    }
+
+    @PostMapping("/api/obtenerDirecciones")
+    public ResponseEntity<?> obtenerDirecciones(@RequestBody String token) {
+
+        if (token.isEmpty()) {
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        try {
+        ObjectMapper mapper = new ObjectMapper();
+        String tokenDecoded = utilsCleanMaster.decoderUser(token);
+        JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+        if (jsonNodeRoot.get("empleado").asBoolean()) {
+            return ResponseEntity.badRequest().body("No tienes permisos para obtener direcciones");
+        }else{
+            return ResponseEntity.ok(direccionesService.findAllByIdCliente(jsonNodeRoot.get("id").asInt()));
+        }
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body("Error al decodificar el token");
+        }
+    }
 }

@@ -36,4 +36,18 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
 
         return Optional.of(reservarCitaDTOList).orElse(null);
     }
+
+    @Override
+    public boolean finalizarReserva(Integer idReserva, Integer idEmpleado) {
+        Optional<ReservarCitaEntities> reserva = reservarCitaRepository.findByIdAndAndIdEmpleado(idReserva, idEmpleado);
+        if (reserva.isPresent()){
+            ReservarCitaEntities r = reserva.get();
+            r.setFinalizadaReserva(true);
+            reservarCitaRepository.save(r);
+            return true;
+        }else {
+            return false;
+        }
+
+    }
 }

@@ -15,7 +15,6 @@
   <div>
     <img th:src="@{/img/logo.png}" id="logo" alt="logoempresa">
   </div>
-
 </header>
 <main>
   <h1>Bienvenid@s a Clean Master</h1>
@@ -28,9 +27,20 @@
     <a id="btn-administrar" class="inactivo" th:if="${esencargado}">administrar</a>
   </nav>
   <hr>
-  <iframe th:sandbox="allow-scripts">
+  <iframe sandbox="allow-scripts allow-same-origin"></iframe>
 
-  </iframe>
+
+  <div id="contendor-button" class="">
+    <input type="hidden" th:value="${escliente}">
+    <button id="btn-events" class="button-special"></button>
+  </div>
+
+
+  <div id="overlay" class="oculto">
+    <div id="datos-overlay">
+
+    </div>
+  </div>
 </main>
 <footer>
   <img src="/img/logo.png" alt="logo">

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html  lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Master</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" >
+    <link rel=" stylesheet" th:href="@{/css/nuevasreservas.css}" >
+</head>
+
+<body>
+<header>
+    <img th:src="@{/img/background.png}" alt="background" id="background">
+    <div>
+        <img th:src="@{/img/logo.png}" id="logo" alt="logoempresa">
+
+    </div>
+</header>
+<main>
+    <h1>Nueva reserva</h1>
+    <div>
+        <label for="servicios">Seleccionar Servicio</label>
+        <select id="servicios" name="servicios"></select>
+    </div>
+
+    <div id="fecha-contenedor">
+        <p>Seleccionar fecha</p>
+        <div id="calendario">
+            <div id="encabezado-calendario">
+                <button id="mesAnterior">&lt;</button>
+                <span id="etiquetaMes"></span>
+                <button id="mesSiguiente">&gt;</button>
+            </div>
+            <div id="dias-calendario"></div>
+            <input type="text" id="fechaSeleccionada" class="oculto">
+        </div>
+            <script>
+                const diasDeLaSemana = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+                let fechaActual = new Date();
+
+                const etiquetaMes = document.getElementById('etiquetaMes');
+                const diasCalendario = document.getElementById('dias-calendario');
+                const fechaSeleccionadaInput = document.getElementById('fechaSeleccionada');
+                const botonMesAnterior = document.getElementById('mesAnterior');
+                const botonMesSiguiente = document.getElementById('mesSiguiente');
+
+                function renderizarCalendario(fecha) {
+                const año = fecha.getFullYear();
+                const mes = fecha.getMonth();
+
+                etiquetaMes.textContent = `${fecha.toLocaleString('es-ES', {month: 'long'})} ${año}`;
+
+                diasCalendario.innerHTML = '';
+
+                diasDeLaSemana.forEach(dia => {
+                const diaElemento = document.createElement('div');
+                diaElemento.textContent = dia;
+                diasCalendario.appendChild(diaElemento);
+            });
+
+                const primerDiaDelMes = new Date(año, mes, 1);
+                const ultimoDiaDelMes = new Date(año, mes + 1, 0);
+                const cantidadDiasEnElMes = ultimoDiaDelMes.getDate();
+
+                const primerDiaDeLaSemana = primerDiaDelMes.getDay();
+
+                for (let i = 0; i < primerDiaDeLaSemana; i++) {
+                const celdaVacia = document.createElement('div');
+                diasCalendario.appendChild(celdaVacia);
+            }
+
+                for (let dia = 1; dia <= cantidadDiasEnElMes; dia++) {
+                const diaElemento = document.createElement('div');
+                diaElemento.textContent = dia;
+                diaElemento.classList.add('dia');
+
+                diaElemento.addEventListener('click', () => seleccionarFecha(dia, mes, año));
+
+                diasCalendario.appendChild(diaElemento);
+            }
+            }
+
+                function seleccionarFecha(dia, mes, año) {
+                const fechaSeleccionada = new Date(año, mes, dia);
+                const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-ES');
+
+                fechaSeleccionadaInput.value = fechaFormateada;
+
+                const dias = document.querySelectorAll('.dia');
+                dias.forEach(diaElemento => diaElemento.classList.remove('seleccionado'));
+                const diaSeleccionadoElemento = Array.from(dias).find(
+                diaElemento => diaElemento.textContent == dia
+                );
+                if (diaSeleccionadoElemento) {
+                diaSeleccionadoElemento.classList.add('seleccionado');
+            }
+            }
+
+                botonMesAnterior.addEventListener('click', () => {
+                fechaActual.setMonth(fechaActual.getMonth() - 1);
+                renderizarCalendario(fechaActual);
+            });
+
+                botonMesSiguiente.addEventListener('click', () => {
+                fechaActual.setMonth(fechaActual.getMonth() + 1);
+                renderizarCalendario(fechaActual);
+            });
+
+                renderizarCalendario(fechaActual);
+        </script>
+        </script>
+    </div>
+
+
+    </div>
+    <div id="direcciones-contenedor">
+        <p>Direcciones</p>
+        <div id="direciones">
+
+        </div>
+        <a id="add-direccion">añade otra direccion</a>
+    </div>
+    <div id="espe-contenedor">
+        <label for="espe">Espeficicaciones</label>
+        <textarea id="espe" name="espe"></textarea>
+    </div>
+    <button id="reservar" class="button-special"><a>Registrar cita </a></button>
+</main>
+<footer>
+    <img src="/img/logo.png" alt="logo">
+    <div>
+        <a th:href="@{/contactar}">Contacta con nosotros</a>
+        <a th:href="@{/terminos}">Terminos y condiciones</a>
+    </div>
+</footer>
+
+<script type="text/javascript" th:src="@{/js/global.js}"></script>
+<script type="text/javascript" th:src="@{/js/nuevasreservas.js}"></script>
+
+</body>
+</html>

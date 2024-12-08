@@ -43,11 +43,10 @@ document.getElementById('submit').addEventListener('click', function() {
                     let d =  data;
                     sessionStorage.setItem( 'CM-token' ,  await d );
                     d = atob(d);
-                    console.log(d)
-                    d = d.replace(/\//g, " \" ");
+                    d = d.replace(/\//g, '"');
+                    d = d.replace( '\\' , "");
                     d = d.replace(/\+/g, ":");
-                    console.log(d);
-                    let user =  d.trim();
+                    let user =  JSON.parse(d);
                     let nombreArea = window.location.href.split("/")[3];
                     let nuevaUrl = `/${nombreArea}/home/${user.id}`;
                     window.location.replace(nuevaUrl);

@@ -1,0 +1,50 @@
+main > div {
+    display: flex;
+    justify-content: center;
+    text-align: left;
+    flex-direction: column;
+}
+
+#calendario {
+    max-width: 350px;
+    margin: 20px auto;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+#encabezado-calendario {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+#dias-calendario {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+.dia {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.dia:hover {
+    background-color: #ddd;
+}
+
+.seleccionado {
+    background-color: #4caf50;
+    color: white;
+}
+
+.dia.deshabilitado {
+    color: #ccc;
+    pointer-events: none;
+}
+
+

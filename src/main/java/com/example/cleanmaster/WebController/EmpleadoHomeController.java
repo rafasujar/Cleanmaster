@@ -1,6 +1,9 @@
 package com.example.cleanmaster.WebController;
 
+import com.example.cleanmaster.Service.EmpleadoService;
 import com.example.cleanmaster.Service.EncargadoService;
+import com.example.cleanmaster.Service.TiposServiciosService;
+import com.example.cleanmaster.models.dto.EmpleadoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class EmpleadoHomeController {
     @Autowired
     private EncargadoService encargadoService;
+    @Autowired
+    private EmpleadoService empleadoService;
 
+    @Autowired
+    TiposServiciosService tiposServiciosService;
 
     @GetMapping("/areaempleados/home/{id}")
     public ModelAndView homeEmpleado(@PathVariable("id") int id) {
@@ -25,6 +32,19 @@ public class EmpleadoHomeController {
     public ModelAndView verAgendaSemana() {
         ModelAndView modelAndView = new ModelAndView("./paginas/agenda.html");
         modelAndView.addObject("escliente", "false");
+        return modelAndView;
+    }
+
+    @GetMapping("/areaempleados/home/{id}/verperfil")
+    public ModelAndView verPerfil(@PathVariable("id") Integer id) {
+        EmpleadoDTO x = empleadoService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("./paginas/perfil.html");
+        modelAndView.addObject("escliente", "false");
+        modelAndView.addObject("nombre", x.getNombre());
+        modelAndView.addObject("apellidos", x.getApellidos());
+        modelAndView.addObject("email", x.getCorreo());
+        modelAndView.addObject("telefono", x.getMovil());
+        modelAndView.addObject("tipos", tiposServiciosService.getEmpleadoServicos(id).stream().map(r->r.getNombre()).toList());
         return modelAndView;
     }
 

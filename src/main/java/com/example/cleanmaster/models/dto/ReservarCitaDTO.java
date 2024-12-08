@@ -22,6 +22,10 @@ public class ReservarCitaDTO {
 
     private String especificaciones;
 
+    private Boolean finalizadaReserva = false;
+
+
+
 
     public static ReservarCitaDTO ConvertToDTO(ReservarCitaEntities entities){
         ReservarCitaDTO dto = new ReservarCitaDTO();
@@ -31,6 +35,7 @@ public class ReservarCitaDTO {
         dto.setFecha(entities.getFecha());
         dto.setIdTipoServicio(entities.getIdTipoServicio());
         dto.setIdDireccion(entities.getIdDireccion());
+        dto.setFinalizadaReserva(entities.getFinalizadaReserva());
         dto.setEspecificaciones(entities.getEspecificaciones());
         return dto;
     }
@@ -43,6 +48,7 @@ public class ReservarCitaDTO {
         entities.setFecha(dto.getFecha());
         entities.setIdTipoServicio(dto.getIdTipoServicio());
         entities.setIdDireccion(dto.getIdDireccion());
+        entities.setFinalizadaReserva(dto.getFinalizadaReserva());
         entities.setEspecificaciones(dto.getEspecificaciones());
         return entities;
     }

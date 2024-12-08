@@ -1,12 +1,2 @@
-# Para hacer 
-- [x] Hacer entidades 
-- [x] Reacer Dtos
-- [x] Login empleados 
-- [x] Login clientes
-- [x] registro clientes
-- [ ] mandar mensajes
-- [x] mandar correos
-- [ ] mandar notificaciones
-- [ ] Crear pdf de facturas
-- [ ] perfil de usuario
-- [ ] que cuando se me tenga el docker se cree la base de datos y cree las reservas y mensajes de prueba de esa semana 
+# errores no solucionados 
+- error al intentar hacer el login tanto cliente como empleado no redirige a la pagina de inicio(error parse token en el front);

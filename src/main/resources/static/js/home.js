@@ -1,8 +1,11 @@
+const navLinks = document.querySelectorAll('nav a');
+const iframe = document.querySelector('iframe');
+const overlay = document.querySelector("#overlay");
+const overlayContent = document.querySelector("#datos-overlay");
+const contendorButton = document.querySelector("#contendor-button")
+const buttonevn = document.querySelector('button#btn-events');
+let empleado = document.querySelector("#contendor-button > input[type=hidden]").value
 window.addEventListener('load', function() {
-    const navLinks = document.querySelectorAll('nav a');
-    const iframe = document.querySelector('iframe');
-    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-
     navLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
@@ -17,31 +20,31 @@ window.addEventListener('load', function() {
             switch (clickedLink.id) {
                 case 'btn-agenda':
                     iframe.src = location.href + '/veragenda';
-                    setTimeout(function () {
-                        const links = iframeDoc.querySelectorAll('a#generardireccion');
-                        if (links.length > 0) {
-                            links.forEach(link => {
-                                link.addEventListener('click', function (e) {
-                                    e.preventDefault(); // Evita el comportamiento predeterminado si es necesario.
-                                    console.log(link);
-                                    alert('¡Enlace clicado!');
-                                });
-                            });
-                        }
-                    });
-
+                    console.log(empleado);
+                    if(empleado === 'false' || empleado === false){
+                        console.log(contendorButton);
+                       contendorButton.classList.add('oculto');
+                    }else {
+                        buttonevn.innerHTML = '';
+                        let newreserva = crearElementoTexto('a', 'Nueva Reserva', buttonevn);
+                        newreserva.href = location.href + '/nuevareserva';
+                    }
                     break;
                 case 'btn-contacto':
-                    iframe.src = location.href + '/contacto';
+                    iframe.src = location.href + '/vercontactos';
                     break;
                 case 'btn-historial':
-                    iframe.src = location.href + '/historial';
+                    iframe.src = location.href + '/verhistorial';
                     break;
                 case 'btn-direcciones':
-                    iframe.src = location.href + '/direcciones';
+                    iframe.src = location.href + '/verdirecciones';
                     break;
                 case 'btn-perfil':
-                    iframe.src = location.href + '/perfil';
+                    iframe.src = location.href + '/verperfil';
+                    contendorButton.classList.remove('oculto');
+                    buttonevn.innerHTML = '';
+                    let modificarperfil = crearElementoTexto('a', 'Modificar Perfil', buttonevn);
+                    modificarperfil.href = location.href + '/modificarperfil';
                     break;
                 case 'btn-administrar':
                     iframe.src = location.href + '/administrar';
@@ -55,12 +58,89 @@ window.addEventListener('load', function() {
         });
     });
     document.querySelector("a#btn-agenda").click();
+    window.addEventListener('message', function(event) {
+        let datos = event.data;
+        switch (datos.id) {
+            case 'btn-agenda':
+                mostrarOverlay();
+                let overlayiframe = crearElemento('iframe', overlayContent);
+               overlayiframe.src = encodeURI("https://www.google.com/maps?q="+datos.direccion+"&output=embed");
+                overlayiframe.style.border = "none";
+                overlayiframe.style.width = "100%";
+                overlayiframe.style.height = "40%";
+                let overlayDatos = crearElemento('div', overlayContent);
+                overlayDatos.style.display = 'flex';
+                overlayDatos.style.flexDirection = 'column';
+                overlayDatos.style.justifyContent = 'center';
+                overlayDatos.style.alignItems = 'center';
+                overlayDatos.style.padding = '10px';
+                overlayDatos.style.height = '60%';
+                overlayDatos.style.justifyContent = 'space-around';
+                let butonAbrir = crearElemento('button', overlayDatos);
+                crearElementoTexto('a', 'Abrir en Google Maps', butonAbrir);
+                butonAbrir.classList.add('button-special');
+                butonAbrir.addEventListener('click', function() {
+                    window.open("https://www.google.com/maps?q="+datos.direccion);
+                });
+                let butonFinal = crearElemento('button', overlayDatos);
+                crearElementoTexto('a', 'Reserva Finalizada', butonFinal);
+                butonFinal.classList.add('button-special');
+                butonFinal.style.boxShadow = '0px 0px 5px 0px #000';
+                butonFinal.addEventListener('click', function() {
+                    fetch("/api/agenda/reservarfinalizada", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            id: datos.idDirecion,
+                            token: sessionStorage.getItem('CM-token')
+                        })
+                    }).then(response => {
+                        if (response.ok) {
+                            alert('ln-86:Reserva finalizada');
+                            overlay.classList.add('oculto');
+                            overlay.classList.remove('overlay');
+                            overlayContent.innerHTML = '';
+                        } else {
+                            overlayContent.innerHTML = 'codigo de error: ' + response.status;
+                        }
+                    })
+                });
+                let butonCerrar = crearElemento('button', overlayDatos);
+                crearElementoTexto('a', 'Cerrar', butonCerrar);
+                butonCerrar.classList.add('button-special');
+                butonCerrar.style.boxShadow = '0px 0px 5px 0px #000';
+                butonCerrar.style.width = '100px';
+                butonCerrar.addEventListener('click', function() {
+                    overlay.classList.add('oculto');
+                    overlay.classList.remove('overlay');
+                    overlayContent.innerHTML = '';
+                });
 
+                break;
+            case 'btn-contacto':
+                break;
+            case 'btn-historial':
+                break;
+            case 'btn-direcciones':
+                break;
+            case 'btn-perfil':
+                break;
+            case 'btn-administrar':
+                break;
+            default:
+                break;
+        }
+    });
 
 });
 
 
-
+function mostrarOverlay() {
+    overlay.classList.remove('oculto');
+    overlay.classList.add('overlay');
+}
 function crearElementoTexto(tag, contenido,padre) {
     let elemento = document.createElement(tag);
     elemento.textContent = contenido;

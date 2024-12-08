@@ -1,2 +1,4 @@
 cambiar base de datos reserva cita - >  direcciones varchar al id de direcciones
 el propio navegador se encargar de coger la direccion del empleado.
+
+añadio campo a reservas para indicar si hay una reserva finalizada o no

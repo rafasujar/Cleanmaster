@@ -15,7 +15,7 @@ window.addEventListener('load', function() {
            }
    }).then(async function (data) {
 
-       let maindiv = document.querySelectorAll('main > div')
+       let maindiv = document.querySelectorAll('div#main > div')
        for (let reservas in data) {
               let contenedor = maindiv[reservas-1];
            if (data[reservas].length === 0) {
@@ -36,9 +36,14 @@ window.addEventListener('load', function() {
                 let a = crearElemento("a",div);
                 a.innerText = "Pulse para ver la dirección";
                 a.id = "generardireccion";
-                let input = crearElemento("input",div);
-                input.type = "hidden";
-                input.value = servicio.direccion;
+                a.addEventListener('click', function () {
+                    let datos = {
+                        id: 'btn-agenda',
+                        direccion: servicio.direccion,
+                        idDirecion: servicio.id
+                    };
+                    window.parent.postMessage(datos, location.origin);
+                });
 
             }else{
                 crearElementoTexto("p", "Asistente: "+servicio.asistente, div);
@@ -52,12 +57,13 @@ window.addEventListener('load', function() {
    });
 
     document.querySelector('select#semana').addEventListener('change', function () {
-        const divscontendeores = document.querySelectorAll('main > div'); // Selecciona solo hijos directos de <main>
+        const divscontendeores = document.querySelectorAll('div#main > div'); // Selecciona solo hijos directos de <main>
         const selectedValue = this.value;
 
         divscontendeores.forEach(div => {
             if (selectedValue === '0') {
                 div.style.display = 'flex';
+                div.style.flexDirection = 'column';
             } else {
                 div.style.display = div.id === selectedValue ? 'flex' : 'none';
             }

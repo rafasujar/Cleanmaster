@@ -32,4 +32,7 @@ public class ReservarCitaEntities {
     @Column(name = "especificaciones", length = 200)
     private String especificaciones;
 
+    @Column(name = "finalizada_reserva", nullable = false)
+    private Boolean finalizadaReserva = false;
+
 }

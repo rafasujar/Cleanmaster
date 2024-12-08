@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TiposServiciosServiceImp implements TiposServiciosService {
@@ -26,5 +27,12 @@ public class TiposServiciosServiceImp implements TiposServiciosService {
     @Override
     public List<TiposServiciosDTO> getAllTipos() {
         return tiposServiciosRepository.findAll().stream().map(TiposServiciosDTO::ConvertToDTO).toList();
+    }
+
+    @Override
+    public List<TiposServiciosDTO> getEmpleadoServicos(Integer id) {
+
+        return tiposServiciosRepository.getTiposServiciosEntitiesByEmpleadosId(id).stream().map(TiposServiciosDTO::ConvertToDTO).collect(Collectors.toList());
+
     }
 }
