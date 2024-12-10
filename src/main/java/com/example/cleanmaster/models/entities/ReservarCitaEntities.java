@@ -17,7 +17,7 @@ public class ReservarCitaEntities {
     @Column(name = "id_Cliente", nullable = false)
     private Integer idCliente;
 
-    @Column(name = "id_Empleado", nullable = false)
+    @Column(name = "id_Empleado", nullable = true)
     private Integer idEmpleado;
 
     @Column(name = "fecha", nullable = false)

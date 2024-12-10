@@ -30,7 +30,7 @@ public class EmpleadoHomeController {
 
     @GetMapping("/areaempleados/home/{id}/veragenda")
     public ModelAndView verAgendaSemana() {
-        ModelAndView modelAndView = new ModelAndView("./paginas/agenda.html");
+        ModelAndView modelAndView = new ModelAndView("./paginas/veragenda.html");
         modelAndView.addObject("escliente", "false");
         return modelAndView;
     }
@@ -48,6 +48,16 @@ public class EmpleadoHomeController {
         return modelAndView;
     }
 
-
-
+    @GetMapping("/areaempleados/home/{id}/modificarperfil")
+    public ModelAndView modificarPerfil(@PathVariable("id") Integer id) {
+        EmpleadoDTO x = empleadoService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("./paginas/modificarperfil.html");
+        modelAndView.addObject("escliente", "false");
+        modelAndView.addObject("nombre", x.getNombre());
+        modelAndView.addObject("apellidos", x.getApellidos());
+        modelAndView.addObject("email", x.getCorreo());
+        modelAndView.addObject("telefono", x.getMovil());
+        modelAndView.addObject("tipos", tiposServiciosService.getEmpleadoServicos(id).stream().map(r->r.getNombre()).toList());
+        return modelAndView;
+    }
 }

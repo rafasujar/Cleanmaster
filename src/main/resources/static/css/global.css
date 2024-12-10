@@ -119,3 +119,8 @@ main {
 .oculto {
     display: none;
 }
+.border-especial{
+    border: 1px black dotted;
+    padding: 10px;
+    margin: 10px;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clean Master</title>
+  <link rel=" stylesheet" th:href="@{/css/agenda.css}" >
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+</head>
+
+<body>
+<main>
+  <div>
+    <label for="buscar">Buscar por mes:</label>
+    <input type="month" name="buscar" id="buscador">
+  </div>
+  <div id="contendor-historial">
+
+  </div>
+</main>
+</body>
+<script th:src="@{/js/verhistorial.js}"></script>
+<script th:src="@{/js/global.js}"></script>
+</html>

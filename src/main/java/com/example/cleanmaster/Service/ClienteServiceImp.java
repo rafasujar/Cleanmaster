@@ -47,4 +47,9 @@ public class ClienteServiceImp implements ClienteService {
     public ClienteDTO findById(Integer id) {
         return clienteRepository.findById(id).map(ClienteDTO::ConvertToDTO).orElse(null);
     }
+
+    @Override
+    public void save(ClienteDTO clienteDTO) {
+        clienteRepository.save(ClienteDTO.ConvertToEntities(clienteDTO));
+    }
 }

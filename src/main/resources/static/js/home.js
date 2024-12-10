@@ -38,6 +38,10 @@ window.addEventListener('load', function() {
                     break;
                 case 'btn-direcciones':
                     iframe.src = location.href + '/verdirecciones';
+                    contendorButton.classList.remove('oculto');
+                    buttonevn.innerHTML = '';
+                    let nuevadireccion = crearElementoTexto('a', 'nueva direccion', buttonevn);
+                    nuevadireccion.href = location.href + '/nuevadireccion';
                     break;
                 case 'btn-perfil':
                     iframe.src = location.href + '/verperfil';

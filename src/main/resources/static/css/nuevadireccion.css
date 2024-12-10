@@ -1,0 +1,37 @@
+main{
+    display: grid;
+    padding: 10px;
+}
+
+div{
+    display: grid;
+    grid-template-columns: 150px 0.5fr;
+    justify-content: center;
+    padding: 10px;
+    grid-gap: 10px;
+    align-items: center;
+}
+
+input[type="text"]{
+    border: 1px solid #000000;
+    border-radius: 30px;
+    padding: 5px;
+    background-color: #7b847b;
+    color: #000000;
+    height: 40px;
+}
+::-ms-input-placeholder{
+    color: #ffecec;
+}
+::placeholder{
+    color: #ffecec;
+}
+
+#add-direccion{
+    justify-self: right;
+}
+#errors{
+    color: red;
+    font-size: 12px;
+    text-align: center;
+}

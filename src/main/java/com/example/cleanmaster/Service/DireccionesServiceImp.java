@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DireccionesServiceImp implements DireccionesService {
@@ -20,11 +21,16 @@ public class DireccionesServiceImp implements DireccionesService {
 
     @Override
     public List<DireccionesDTO> findAllByIdCliente(Integer id) {
-        return direccionesRepository.findAllByIdCliente(id);
+        return direccionesRepository.findAllByIdCliente(id).stream().map(DireccionesDTO::ConvertToDTO).collect(Collectors.toList());
     }
 
     @Override
     public void save(DireccionesDTO direccionesDTO) {
         direccionesRepository.save(DireccionesDTO.ConvertToEntities(direccionesDTO));
+    }
+
+    @Override
+    public void delete(DireccionesDTO direccionesDTO) {
+        direccionesRepository.delete(DireccionesDTO.ConvertToEntities(direccionesDTO));
     }
 }

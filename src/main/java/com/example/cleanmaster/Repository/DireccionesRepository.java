@@ -11,5 +11,7 @@ import java.util.List;
 public interface DireccionesRepository extends JpaRepository<DireccionesEntities, Integer> {
     DireccionesEntities getDireccionesEntitiesById(Integer id);
 
-    List<DireccionesDTO> findAllByIdCliente(Integer id);
+    List<DireccionesEntities> findAllByIdCliente(Integer id);
+
+
 }

@@ -1,0 +1,21 @@
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+input {
+    height: 40px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 30px;
+}
+main > div {
+    display: grid;
+}
+label{
+    margin: 10px;
+}
+button{
+    margin-top: 10px;
+}

@@ -26,7 +26,7 @@ public class ClienteHomeController {
 
     @GetMapping("/areaclientes/home/{id}/veragenda")
     public ModelAndView verAgendaSemana() {
-        ModelAndView modelAndView = new ModelAndView("./paginas/agenda.html");
+        ModelAndView modelAndView = new ModelAndView("./paginas/veragenda.html");
         modelAndView.addObject("escliente", "true");
         return modelAndView;
     }
@@ -46,6 +46,33 @@ public class ClienteHomeController {
     public ModelAndView nuevaReserva() {
         ModelAndView modelAndView = new ModelAndView("./paginas/nuevasreservas.html");
         modelAndView.addObject("escliente", "true");
+        return modelAndView;
+    }
+
+    @GetMapping("/areaclientes/home/{id}/nuevadireccion")
+    public  ModelAndView nuevaDireccion(){
+        ModelAndView modelAndView = new ModelAndView("./paginas/nuevadireccion.html");
+        return modelAndView;
+    }
+    @GetMapping("/areaclientes/home/{id}/verdirecciones")
+    public ModelAndView verDirecciones(){
+        ModelAndView modelAndView = new ModelAndView("./paginas/verdirecciones.html");
+        return modelAndView;
+    }
+    @GetMapping("/areaclientes/home/{id}/modificarperfil")
+    public ModelAndView moidificarPerfil(@PathVariable("id") Integer id) {
+        ClienteDTO x = clienteService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("./paginas/modificarperfil.html");
+        modelAndView.addObject("escliente", "true");
+        modelAndView.addObject("nombre", x.getNombre());
+        modelAndView.addObject("email", x.getCorreo());
+        modelAndView.addObject("telefono", x.getMovil());
+        return modelAndView;
+    }
+
+    @GetMapping("/areaclientes/home/{id}/verhistorial")
+    public ModelAndView verHistorial(){
+        ModelAndView modelAndView = new ModelAndView("./paginas/verhistorial.html");
         return modelAndView;
     }
 }

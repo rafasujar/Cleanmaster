@@ -1,11 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: localhost
--- Tiempo de generación: 08-12-2024 a las 04:17:46
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,6 +10,7 @@ DROP DATABASE IF EXISTS `CleanMaster`;
 CREATE DATABASE IF NOT EXISTS `CleanMaster` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE `CleanMaster`;
 
+CREATE USER 'CleanMaster'@'%' IDENTIFIED VIA mysql_native_password USING '***';GRANT ALL PRIVILEGES ON *.* TO 'CleanMaster'@'%' REQUIRE NONE WITH GRANT OPTION MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;GRANT ALL PRIVILEGES ON `CleanMaster\_%`.* TO 'CleanMaster'@'%';GRANT ALL PRIVILEGES ON `CleanMaster`.* TO 'CleanMaster'@'%';
 -- --------------------------------------------------------
 
 --

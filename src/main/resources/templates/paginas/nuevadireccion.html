@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!--suppress HtmlUnknownAttribute -->
+<html  lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clean Master</title>
+  <link rel="stylesheet" th:href="@{/css/global.css}" >
+  <link rel=" stylesheet" th:href="@{/css/nuevadireccion.css}" >
+</head>
+
+<body>
+<header>
+  <img th:src="@{/img/background.png}" alt="background" id="background">
+  <div>
+    <img th:src="@{/img/logo.png}" id="logo" alt="logoempresa">
+  </div>
+</header>
+<main>
+  <h1>Añadir nueva direccion</h1>
+  <p id="errors" class="oculto"></p>
+  <div>
+
+    <label for="ciudad">Ciudad:</label>
+    <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad">
+
+    <label for="calle">Calle:</label>
+    <input type="text" id="calle" name="calle" placeholder="Calle">
+
+    <label for="numero">Numero Portal:</label>
+    <input type="text" id="numero" name="numero" placeholder="Numero">
+
+    <label for="puerta">Numero de puerta:</label>
+    <input type="text" id="puerta" name="puerta" placeholder="Puerta">
+
+    <label for="codigoPostal">Codigo Postal:</label>
+    <input type="text" id="codigoPostal" name="codigoPostal" placeholder="Codigo Postal">
+
+  </div>
+  <button id="add-direccion" class="button-special"><a>Añadir direccion</a></button>
+</main>
+<footer>
+  <img src="/img/logo.png" alt="logo">
+  <div>
+    <a th:href="@{/contactar}">Contacta con nosotros</a>
+    <a th:href="@{/terminos}">Terminos y condiciones</a>
+  </div>
+</footer>
+<script type="text/javascript" th:src="@{/js/global.js}"></script>
+<script type="text/javascript" th:src="@{/js/nuevadireccion.js}"></script>
+</body>
+</html>

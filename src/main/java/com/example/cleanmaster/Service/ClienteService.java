@@ -8,4 +8,6 @@ public interface ClienteService {
     void registrarCliente(ClienteDTO clienteDTO);
     ClienteDTO existeCliente(String correo);
     ClienteDTO findById(Integer id);
+
+    void save(ClienteDTO clienteDTO);
 }

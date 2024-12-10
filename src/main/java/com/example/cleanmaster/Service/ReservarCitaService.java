@@ -10,4 +10,6 @@ public interface ReservarCitaService {
     List<ReservarCitaDTO> reservasPorClienteEntreLunesYDomingo(Integer idCliente, LocalDate lunes, LocalDate domingo);
    List<ReservarCitaDTO> reservasPorEmpleadosEntreLunesYDomingo(Integer idEmpleado, LocalDate lunes, LocalDate domingo);
    boolean finalizarReserva(Integer idReserva,Integer idEmpleado);
+    void save(ReservarCitaDTO reservarCitaDTO);
+    List<ReservarCitaDTO>historialCliente(int idCliente);
 }

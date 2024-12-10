@@ -10,10 +10,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -129,24 +126,66 @@ public class AgendaRestController {
         return ResponseEntity.ok(tiposServiciosService.getAllTipos());
     }
 
-    @PostMapping("/api/obtenerDirecciones")
-    public ResponseEntity<?> obtenerDirecciones(@RequestBody String token) {
 
+
+    @PostMapping("/api/agenda/reservarcita")
+    public ResponseEntity<?> reservarCita(@RequestHeader("Authorization") String token, @RequestBody ReservarCitaDTO reservarCitaDTO) {
         if (token.isEmpty()) {
             return ResponseEntity.badRequest().body("empty token ");
         }
         try {
-        ObjectMapper mapper = new ObjectMapper();
-        String tokenDecoded = utilsCleanMaster.decoderUser(token);
-        JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
-        if (jsonNodeRoot.get("empleado").asBoolean()) {
-            return ResponseEntity.badRequest().body("No tienes permisos para obtener direcciones");
-        }else{
-            return ResponseEntity.ok(direccionesService.findAllByIdCliente(jsonNodeRoot.get("id").asInt()));
-        }
+            ObjectMapper mapper = new ObjectMapper();
+            String tokenDecoded = utilsCleanMaster.decoderUser(token);
+            JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+
+            if (jsonNodeRoot.get("empleado").asBoolean()) {
+                return ResponseEntity.badRequest().body("No tienes permisos para reservar citas");
+            }else{
+                reservarCitaDTO.setIdCliente(jsonNodeRoot.get("id").asInt());
+                reservarCitaDTO.setFinalizadaReserva(false);
+                reservarCitaService.save(reservarCitaDTO);
+                return ResponseEntity.ok("Reserva realizada");
+            }
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body("Error al decodificar el token");
+            throw new RuntimeException(e);
         }
     }
+
+    @PostMapping("/api/historial/cliente")
+    public ResponseEntity<?> historialCliente(@RequestHeader("Authorization") String token) {
+        if (token.isEmpty()) {
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String[] dias = {null,"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"};
+            String tokenDecoded = utilsCleanMaster.decoderUser(token);
+            ArrayNode arrayNode = mapper.createArrayNode();
+            JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+            if (jsonNodeRoot.get("empleado").asBoolean()) {
+                return ResponseEntity.badRequest().body("No tienes permisos para ver historial de citas");
+            }else{
+                Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.ofNullable(reservarCitaService.historialCliente(jsonNodeRoot.get("id").asInt()));
+                if (reservarCitaDTOList.isPresent()) {
+                    for (ReservarCitaDTO reservarCitaDTO : reservarCitaDTOList.get()) {
+                        ObjectNode mapjson = mapper.createObjectNode();
+                        mapjson.put("id", reservarCitaDTO.getFecha().toString());
+                        String d = dias[reservarCitaDTO.getFecha().getDayOfWeek().getValue()];
+                        mapjson.put("fecha", d + ", " + reservarCitaDTO.getFecha().getDayOfMonth() + " de " + reservarCitaDTO.getFecha().getMonth() + " de " + reservarCitaDTO.getFecha().getYear());
+                        mapjson.put("tipo", tiposServiciosService.getTipoById(reservarCitaDTO.getIdTipoServicio()).getNombre());
+                        mapjson.put("asistente", empleadoService.findById(reservarCitaDTO.getIdEmpleado()).getNombre());
+                        mapjson.put("idreserva", reservarCitaDTO.getId());
+                        arrayNode.add(mapjson);
+                    }
+                    return ResponseEntity.ok(arrayNode);
+                }else{
+                    return ResponseEntity.status(404).body("No hay reservas para esta semana");
+                }
+
+            }
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

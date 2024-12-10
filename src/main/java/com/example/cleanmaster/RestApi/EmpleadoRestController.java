@@ -97,4 +97,39 @@ public class EmpleadoRestController {
         return modelAndView;
     }
 
+
+    @PostMapping("areaempleados/home/{id}/savecambios")
+    public ResponseEntity<?> saveCampos(@RequestHeader("Authorization") String token, @RequestBody EmpleadoDTO empleadoDTO, @PathVariable("id") int id) {
+        if (token.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El token no puede estar vacio");
+        }
+        if (empleadoDTO.getCorreo().isEmpty() && empleadoDTO.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleadodto2.getCorreo o la contraseña no pueden estar vacios");
+        }
+
+        if (!empleadoDTO.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleadodto2.getCorreo no cumple con los requisitos de formato");
+        }
+        String decode = utilsCleanMaster.decodeBase54(empleadoDTO.getPassword());
+        if (!decode.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La contraseña no cumple con los requisitos de seguridad");
+        }
+
+        Optional<EmpleadoDTO> empleadoDTO2 = Optional.ofNullable(empleadoService.findById(id));
+        if (empleadoDTO2.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("El empleado no fue encontrado");
+        }
+        empleadoDTO.setId(id);
+        empleadoDTO.setIban(empleadoDTO2.get().getIban());
+        empleadoDTO.setNumss(empleadoDTO2.get().getNumss());
+        empleadoDTO.setIdEncargada(empleadoDTO2.get().getIdEncargada());
+        empleadoService.Guardar(empleadoDTO);
+        return ResponseEntity.ok(utilsCleanMaster.generateToken(true, empleadoDTO.getId(), empleadoDTO.getCorreo(), empleadoDTO.getNombre()+" "+empleadoDTO.getApellidos()));
+    }
+
 }

@@ -19,13 +19,15 @@
 </header>
 <main>
     <h1>Nueva reserva</h1>
-    <div>
+    <div id="contendor-tipos">
+        <p id="error-tipos" class="oculto"></p>
         <label for="servicios">Seleccionar Servicio</label>
         <select id="servicios" name="servicios"></select>
     </div>
 
     <div id="fecha-contenedor">
         <p>Seleccionar fecha</p>
+        <p id="error-fecha" class="oculto"></p>
         <div id="calendario">
             <div id="encabezado-calendario">
                 <button id="mesAnterior">&lt;</button>
@@ -112,17 +114,20 @@
         </script>
     </div>
 
-
-    </div>
     <div id="direcciones-contenedor">
         <p>Direcciones</p>
+        <p id="error-direcciones" class="oculto"></p>
         <div id="direciones">
 
         </div>
         <a id="add-direccion">añade otra direccion</a>
     </div>
+
     <div id="espe-contenedor">
+
         <label for="espe">Espeficicaciones</label>
+        <p id="error-espe" class="oculto"></p>
+
         <textarea id="espe" name="espe"></textarea>
     </div>
     <button id="reservar" class="button-special"><a>Registrar cita </a></button>

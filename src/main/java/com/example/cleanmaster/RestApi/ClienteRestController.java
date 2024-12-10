@@ -7,10 +7,7 @@ import com.example.cleanmaster.utils.utilsCleanMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Optional;
@@ -110,6 +107,33 @@ public class ClienteRestController {
         clienteService.registrarCliente(clienteDTO);
         return ResponseEntity.ok(true);
     }
+
+    @PostMapping("/areaclientes/home/{id}/savecambios")
+    public ResponseEntity<?> saveCampos(@RequestHeader("Authorization") String token, @RequestBody ClienteDTO clienteDTO, @PathVariable("id") int id) {
+        if (token.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El token no puede estar vacio");
+        }
+        if (clienteDTO.getCorreo().isEmpty() && clienteDTO.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El cliente no puede estar vacio");
+        }
+        if (!clienteDTO.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El cliente no cumple con los requisitos de formato");
+        }
+        String decode = utilsCleanMaster.decodeBase54(clienteDTO.getPassword());
+        if (!decode.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La contraseña no cumple con los requisitos de seguridad");
+        }
+
+        clienteDTO.setId(id);
+        clienteService.save(clienteDTO);
+        return ResponseEntity.ok(utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre()));
+    }
+
+
 
 
     @GetMapping("/loadCliente")

@@ -50,4 +50,14 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
         }
 
     }
+
+    @Override
+    public void save(ReservarCitaDTO reservarCitaDTO) {
+        reservarCitaRepository.save(ReservarCitaDTO.ConvertToEntities(reservarCitaDTO));
+    }
+
+    @Override
+    public List<ReservarCitaDTO> historialCliente(int idCliente) {
+        return reservarCitaRepository.findAllByIdClienteAndFinalizadaReserva(idCliente, true).stream().map(ReservarCitaDTO::ConvertToDTO).toList();
+    }
 }
