@@ -13,7 +13,7 @@ window.addEventListener('load', function() {
                crearElementoTexto('h3', "Sin reservas actuales", document.querySelector('main'));
                return;
            }
-   }).then(async function (data) {
+   }).then( data =>  {
 
        let maindiv = document.querySelectorAll('div#main > div')
        for (let reservas in data) {

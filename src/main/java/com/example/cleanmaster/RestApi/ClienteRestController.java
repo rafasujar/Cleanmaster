@@ -135,14 +135,4 @@ public class ClienteRestController {
 
 
 
-
-    @GetMapping("/loadCliente")
-    public ModelAndView load() {
-        ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
-        ClienteDTO clienteDTO = clienteService.findById(1);
-        String token =  utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre());
-        modelAndView.addObject("token", token);
-        return modelAndView;
-    }
-
 }

@@ -8,8 +8,8 @@ import lombok.Data;
 @Table(name = "empleado")
 public class EmpleadoEntities {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id" )
     private Integer id;
 
     @Column(name = "Nombre", nullable = false, length = 50)

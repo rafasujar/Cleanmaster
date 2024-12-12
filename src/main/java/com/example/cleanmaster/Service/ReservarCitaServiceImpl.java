@@ -60,4 +60,9 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
     public List<ReservarCitaDTO> historialCliente(int idCliente) {
         return reservarCitaRepository.findAllByIdClienteAndFinalizadaReserva(idCliente, true).stream().map(ReservarCitaDTO::ConvertToDTO).toList();
     }
+
+    @Override
+    public List<ReservarCitaDTO> obtenerReservasParaHorarios() {
+        return reservarCitaRepository.findAllByIdEmpleadoAndFinalizadaReserva(0, false).stream().map(ReservarCitaDTO::ConvertToDTO).toList();
+    }
 }

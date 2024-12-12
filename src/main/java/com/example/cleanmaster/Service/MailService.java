@@ -4,7 +4,7 @@ import com.example.cleanmaster.models.dto.ReservarCitaDTO;
 
 public interface MailService {
     void resetPassword(String email, String password);
-    void sendFacture(String email, ReservarCitaDTO reservarCitaDTO);
+    void sendFacture(String email, String mensaje);
 
 
 }

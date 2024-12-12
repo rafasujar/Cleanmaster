@@ -88,14 +88,7 @@ public class EmpleadoRestController {
         return ResponseEntity.ok(true);
 
     }
-    @GetMapping("/loadEmpleado")
-    public ModelAndView load() {
-        ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
-        EmpleadoDTO empleadoDTO2 = empleadoService.findById(2);
-        String token =  utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre()+" "+empleadoDTO2.getApellidos());
-        modelAndView.addObject("token", token);
-        return modelAndView;
-    }
+
 
 
     @PostMapping("areaempleados/home/{id}/savecambios")

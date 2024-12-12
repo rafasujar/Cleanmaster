@@ -33,6 +33,8 @@ public class AgendaRestController {
     private ClienteService clienteService;
     @Autowired
     private EmpleadoService empleadoService;
+    @Autowired
+    private MailService mailSender;
 
     @PostMapping("/api/agenda/veragenda/semana")
     public ResponseEntity<?> verAgenda(@RequestBody String token) throws JsonProcessingException {
@@ -84,17 +86,18 @@ public class AgendaRestController {
                         mapjson.put("movil", clienteService.findById(reservarCitaDTO.getIdCliente()).getMovil());
 
                     }else{
-
-                        mapjson.put("asistente", empleadoService.findById(reservarCitaDTO.getIdEmpleado()).getNombre());
+                        String nombreEmpleado = empleadoService.findById(reservarCitaDTO.getIdEmpleado()).getNombre();
+                        mapjson.put("asistente", nombreEmpleado);
 
                     }
                     reservas.get(reservarCitaDTO.getFecha().getDayOfWeek().getValue()).add(mapjson);
                 }
+            return ResponseEntity.ok(reservas);
             }else{
                 return ResponseEntity.status(404).body("No hay reservas para esta semana");
             }
 
-        return ResponseEntity.ok(reservas);
+
     }
 
     @PostMapping("/api/agenda/reservarfinalizada")
@@ -188,4 +191,54 @@ public class AgendaRestController {
         }
     }
 
+    @PostMapping("/api/historial/cliente/factura")
+    public ResponseEntity<?> facturacliente(@RequestHeader("authorization") String token, @RequestBody String reserva) {
+        if (token.isEmpty()) {
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        try {
+         ObjectMapper mapper = new ObjectMapper();
+         JsonNode jsonNodeRoot = mapper.readTree(utilsCleanMaster.decoderUser(token));
+         if (jsonNodeRoot.get("empleado").asBoolean()) {
+                return ResponseEntity.badRequest().body("No tienes permisos para ver historial de citas");
+         }
+         JsonNode jsonNodeReserva = mapper.readTree(reserva);
+         StringBuilder cuerpoMensaje = new StringBuilder();
+            System.out.println(reserva);
+            cuerpoMensaje.append("Factura de la reserva: ").append(jsonNodeReserva.get("idreserva").asText()).append("\n");
+            cuerpoMensaje.append("Fecha: ").append(jsonNodeReserva.get("fecha").asText()).append("\n");
+            cuerpoMensaje.append("Tipo de servicio: ").append(jsonNodeReserva.get("tipo").asText()).append("\n");
+            cuerpoMensaje.append("Asistente: ").append(jsonNodeReserva.get("asistente").asText()).append("\n");
+            cuerpoMensaje.append("Gracias por preferirnos");
+            //mailSender.sendFacture(jsonNodeRoot.get("correo").asText(), cuerpoMensaje.toString());
+            mailSender.sendFacture("rafasujar@yopmail.com", cuerpoMensaje.toString());
+
+        }catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println(reserva);
+        return ResponseEntity.ok("Factura enviada");
+    }
+
+    @PostMapping("/api/obtenerReservas")
+    public ResponseEntity<?> obtenerReservas(@RequestHeader("Authorization") String token) {
+        if (token.isEmpty()) {
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String tokenDecoded = utilsCleanMaster.decoderUser(token);
+            JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+            if (jsonNodeRoot.get("empleado").asBoolean()) {
+               List<ReservarCitaDTO> reservarCitaDTOList = reservarCitaService.obtenerReservasParaHorarios();
+                if (reservarCitaDTOList.isEmpty()) {
+                    return ResponseEntity.status(404).body("No hay reservas para esta semana");
+                }
+                return ResponseEntity.ok(reservarCitaDTOList);
+            }
+            return ResponseEntity.badRequest().body("No tienes permisos para ver reservas");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

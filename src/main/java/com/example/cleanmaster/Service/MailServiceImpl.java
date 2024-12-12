@@ -26,7 +26,7 @@ public class MailServiceImpl implements MailService{
     }
 
     @Override
-    public void sendFacture(String email, ReservarCitaDTO reservarCitaDTO) {
+    public void sendFacture(String email, String mensaje)  {
         /*
         try {
              Esta seria la estructura de un mensaje con un archivo adjunto falta crear el pdf con la factura
@@ -45,6 +45,12 @@ public class MailServiceImpl implements MailService{
             throw new RuntimeException(e);
         }
     */
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(miCorreo);
+        message.setTo(email);
+        message.setSubject("Factura CleanMaster");
+        message.setText(mensaje);
+        emailSender.send(message);
     }
 
 

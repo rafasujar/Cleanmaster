@@ -10,13 +10,13 @@ import lombok.Data;
 public class MensajeEntities {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(name = "id_cliente", nullable = false)
+    @Column(name = "id_cliente")
     private Integer idCliente;
 
-    @Column(name = "id_empleado", nullable = false)
+    @Column(name = "id_empleado")
     private Integer idEmpleado;
 
     @Column(name = "asunto", nullable = false, length = 100)

@@ -1,0 +1,24 @@
+#id-buscador{
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+h1,h2{
+    text-align: left;
+}
+main{
+    padding: 10px;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#contenedor-empleados{
+    padding: 10px;
+    overflow: scroll;
+}
+
+#contenedor-empleados > div{
+    margin-top: 10px;
+}

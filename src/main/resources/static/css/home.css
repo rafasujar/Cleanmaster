@@ -49,13 +49,17 @@ iframe{
     height: 100%;
 }
 
-.hola{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.8); /* Color de fondo (negro semi-transparente) */
-    z-index: 9999; /* Asegura que esté encima de todo */
+.mensaje-abajo{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #7f6a6a;
+    color: white;
+    padding: 10px;
+    border-radius: 67px;
+    text-align: center;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    align-content: center;
 }
-

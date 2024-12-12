@@ -20,12 +20,11 @@ window.addEventListener('load', function() {
             switch (clickedLink.id) {
                 case 'btn-agenda':
                     iframe.src = location.href + '/veragenda';
-                    console.log(empleado);
                     if(empleado === 'false' || empleado === false){
-                        console.log(contendorButton);
                        contendorButton.classList.add('oculto');
                     }else {
                         buttonevn.innerHTML = '';
+                        contendorButton.classList.remove('oculto');
                         let newreserva = crearElementoTexto('a', 'Nueva Reserva', buttonevn);
                         newreserva.href = location.href + '/nuevareserva';
                     }
@@ -35,6 +34,7 @@ window.addEventListener('load', function() {
                     break;
                 case 'btn-historial':
                     iframe.src = location.href + '/verhistorial';
+                    contendorButton.classList.add('oculto');
                     break;
                 case 'btn-direcciones':
                     iframe.src = location.href + '/verdirecciones';
@@ -52,6 +52,7 @@ window.addEventListener('load', function() {
                     break;
                 case 'btn-administrar':
                     iframe.src = location.href + '/administrar';
+                    contendorButton.classList.add('oculto');
                     break;
                 default:
 
@@ -123,15 +124,18 @@ window.addEventListener('load', function() {
                 });
 
                 break;
-            case 'btn-contacto':
-                break;
             case 'btn-historial':
-                break;
-            case 'btn-direcciones':
-                break;
-            case 'btn-perfil':
+                document.querySelector('main').style.position = 'relative';
+                let div = crearElemento('div', document.querySelector('main'));
+                div.classList.add('mensaje-abajo');
+                crearElementoTexto('h2', datos.response, div);
+                setTimeout(() => {
+                    document.querySelector('main').style.position = '';
+                    div.remove();
+                }, 5000);
                 break;
             case 'btn-administrar':
+                window.location.href = datos.response;
                 break;
             default:
                 break;

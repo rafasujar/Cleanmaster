@@ -33,17 +33,16 @@ window.addEventListener('load', function() {
                        'Content-Type': 'application/json',
                        authorization: sessionStorage.getItem("CM-token")
                    },
-                   body: JSON.stringify({
-                       id: element.idreserva
-                   })
+                   body: JSON.stringify(element)
                }).then(response => {
-                   if (response.ok) {
-                       return response.json();
-                   }
-                   throw new Error(response.statusText);
+                    return response.text()
                }).then(data => {
-                   console.log(data);
-                   
+                   let datos = {
+                       id: 'btn-historial',
+                       response: data
+                   };
+                   console.log(datos);
+                   window.parent.postMessage(datos, location.origin);
                }).catch(error => {
                    console.error("Error: "+error);
             });

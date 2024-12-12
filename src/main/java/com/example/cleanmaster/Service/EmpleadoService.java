@@ -13,5 +13,6 @@ public interface EmpleadoService {
     EmpleadoDTO logearEmpleado(String correo, String password);
     EmpleadoDTO findById(Integer id);
     EmpleadoDTO existsByCorreo(String correo);
+    void    asignarServicio(Integer id, Integer id1);
 
 }

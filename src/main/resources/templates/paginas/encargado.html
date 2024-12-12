@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html  lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clean Master</title>
+  <link rel=" stylesheet" th:href="@{/css/global.css}" >
+</head>
+<body>
+<main style="display: grid; height: 250px;">
+    <a th:href="@{/areaencargados/empleado/alta}">Dar de alta a un Empleado</a>
+    <a th:href="@{/areaencargados/empleado/baja/verempleado}">Dar de baja a un Empleado</a>
+    <a th:href="@{/areaencargados/empleado/modificarHorario}">Asignar Horario semanal</a>
+</main>
+<script type="text/javascript" th:src="@{/js/global.js}">
+</script>
+<script>
+window.addEventListener('load', function() {
+  document.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', function(event) {
+      event.preventDefault();
+      const data = {
+        response: event.target.href,
+        id: 'btn-administrar'
+      };
+      window.parent.postMessage(data, location.origin);
+    });
+  });
+});
+</script>
+</body>
+</html>

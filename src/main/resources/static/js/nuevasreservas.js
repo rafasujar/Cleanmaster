@@ -129,8 +129,13 @@ window.addEventListener('load', function() {
             body: JSON.stringify(reserva)
         }).then(response => {
             if (response.ok) {
-                return response.json();
+                return response.text();
             }
+            throw new Error("Error al reservar cita");
+        }).then(data => {
+            setTimeout(() => {
+                window.history.back();
+            },1000);
         })
 
     });

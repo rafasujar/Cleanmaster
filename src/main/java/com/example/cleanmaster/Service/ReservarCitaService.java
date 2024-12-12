@@ -12,4 +12,6 @@ public interface ReservarCitaService {
    boolean finalizarReserva(Integer idReserva,Integer idEmpleado);
     void save(ReservarCitaDTO reservarCitaDTO);
     List<ReservarCitaDTO>historialCliente(int idCliente);
+
+    List<ReservarCitaDTO> obtenerReservasParaHorarios();
 }
