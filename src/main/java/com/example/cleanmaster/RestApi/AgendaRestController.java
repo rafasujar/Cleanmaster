@@ -1,6 +1,7 @@
 package com.example.cleanmaster.RestApi;
 
 import com.example.cleanmaster.Service.*;
+import com.example.cleanmaster.models.dto.EmpleadoDTO;
 import com.example.cleanmaster.models.dto.ReservarCitaDTO;
 import com.example.cleanmaster.utils.utilsCleanMaster;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -237,6 +238,46 @@ public class AgendaRestController {
                 return ResponseEntity.ok(reservarCitaDTOList);
             }
             return ResponseEntity.badRequest().body("No tienes permisos para ver reservas");
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    @PostMapping("/api/agenda/obtenerPersonasByReservas")
+    public ResponseEntity<?> obtenerPersonasByReservas(@RequestHeader("Authorization") String token) {
+        if (token.isEmpty()) {
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String tokenDecoded = utilsCleanMaster.decoderUser(token);
+            JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+            ArrayNode arrayNode = mapper.createArrayNode();
+            List<ReservarCitaDTO> reservarCitaDTOList ;
+            if (jsonNodeRoot.get("empleado").asBoolean()) {
+              reservarCitaDTOList = reservarCitaService.obtenerReservasParaMensajePorIdEmpleadoSegunMes(jsonNodeRoot.get("id").asInt());
+            }else {
+                reservarCitaDTOList = reservarCitaService.obtenerReservasParaMensajePorIdClienteSegunMes(jsonNodeRoot.get("id").asInt());
+            }
+
+            if (reservarCitaDTOList.isEmpty()) {
+                return ResponseEntity.status(404).body("No hay reservas para esta semana");
+            }
+            for (ReservarCitaDTO reservarCitaDTO : reservarCitaDTOList) {
+                ObjectNode mapjson = mapper.createObjectNode();
+                if (jsonNodeRoot.get("empleado").asBoolean()) {
+                    mapjson.put("nombre", clienteService.findById(reservarCitaDTO.getIdCliente()).getNombre()+"  "+reservarCitaDTO.getFecha());
+                    mapjson.put("id", reservarCitaDTO.getIdCliente());
+                }else{
+                    EmpleadoDTO e = empleadoService.findById(reservarCitaDTO.getIdEmpleado());
+                    mapjson.put("nombre",e.getNombre()+"  "+e.getApellidos()+"  "+reservarCitaDTO.getFecha());
+                    mapjson.put("id", reservarCitaDTO.getIdEmpleado());
+                }
+                arrayNode.add(mapjson);
+            }
+            return ResponseEntity.ok(arrayNode);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

@@ -25,4 +25,10 @@ public class MensajeEntities {
     @Column(name = "mensaje", nullable = false, length = 500)
     private String mensaje;
 
+    @Column(name = "emisor",  length = 200)
+    private String emisor;
+
+    @Column(name = "receptor",  length = 200)
+    private String receptor;
+
 }

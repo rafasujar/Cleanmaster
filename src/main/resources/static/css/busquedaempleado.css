@@ -1,8 +1,10 @@
 #id-buscador{
     padding: 10px;
-    display: flex;
+    display: grid;
     align-items: center;
+    justify-content: center;
 }
+
 h1,h2{
     text-align: left;
 }
@@ -16,9 +18,32 @@ main{
 
 #contenedor-empleados{
     padding: 10px;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
-#contenedor-empleados > div{
-    margin-top: 10px;
+#buscador{
+    height: 40px;
+    width: 300px;
+    padding: 10px;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+
+button{
+    background-color: #D3BCA7;
+    padding: 10px;
+    border-radius: 30px;
+    border: 1px solid #D3BCA7;
+    height: 50px;
+    transition: background-color 1s;
+}
+button > a {
+    color: white;
+    font-family: 'Lexend Deca';
+    font-size: 25px;
+}
+
+button:hover{
+    background-color: #a3978c;
 }

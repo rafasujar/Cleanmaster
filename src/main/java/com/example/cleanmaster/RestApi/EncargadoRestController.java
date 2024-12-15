@@ -48,7 +48,6 @@ public class EncargadoRestController {
         if (token.isEmpty()) {
             return ResponseEntity.status(401).body("No autorizado");
         }
-        System.out.println(idTiposservicios.toString());
         try {
             ObjectMapper mapper = new ObjectMapper();
             JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
@@ -105,7 +104,7 @@ public class EncargadoRestController {
             if (!encargadoService.esEncargado(node.get("id").asInt())) {
                 return ResponseEntity.status(401).body("No autorizado");
             }
-            return ResponseEntity.ok(empleadoService.findAll());
+            return ResponseEntity.ok(empleadoService.findAllByIdEncargado(node.get("id").asInt()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al cargar empleados");
         }

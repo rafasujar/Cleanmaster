@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html  lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clean Master</title>
+    <link rel="stylesheet" th:href="@{/css/global.css}" >
+    <link rel=" stylesheet" th:href="@{/css/nuevosmensajes.css}" >
+</head>
+
+<body>
+<header>
+    <img th:src="@{/img/background.png}" alt="background" id="background">
+    <div>
+        <img th:src="@{/img/logo.png}" id="logo" alt="logoempresa">
+
+    </div>
+</header>
+<main>
+    <h1> Nuevo mensaje</h1>
+    <p id="showerrors"></p>
+    <div>
+    <h2>Para: </h2>
+    <select id="personas">
+        <option value="0">Selecciona una persona</option>
+    </select>
+    </div>
+    <div>
+        <label for="asunto"><h2> Asunto: </h2></label>
+        <input type="text" id="asunto" name="asunto" maxlength="100">
+    </div>
+    <div>
+        <label for="mensaje"><h2> mensaje: </h2></label>
+        <textarea id="mensaje" name="mensaje" maxlength="500"></textarea>
+    </div>
+
+    <button id="enviar" class="button-special"><a>Enviar</a></button>
+</main>
+<footer>
+    <img src="/img/logo.png" alt="logo">
+    <div>
+        <a th:href="@{/contactar}">Contacta con nosotros</a>
+        <a th:href="@{/terminos}">Terminos y condiciones</a>
+    </div>
+</footer>
+
+<script type="text/javascript" th:src="@{/js/global.js}"></script>
+<script type="text/javascript" th:src="@{/js/nuevomensajes.js}"></script>
+
+</body>
+</html>

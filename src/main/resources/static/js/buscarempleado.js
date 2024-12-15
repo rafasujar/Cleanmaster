@@ -1,4 +1,6 @@
+const divs = [];
 window.addEventListener('load', function () {
+
    fetch("/api/cargarempleados", {
        method: 'POST',
         headers: {
@@ -17,6 +19,7 @@ window.addEventListener('load', function () {
             let div = document.createElement('div');
             document.querySelector("#contenedor-empleados").append(div);
             div.id = empleado.correo;
+            div.style.textWrap = 'wrap';
             div.classList.add('border-especial');
             let p = document.createElement('h3');
             div.appendChild(p);
@@ -29,10 +32,33 @@ window.addEventListener('load', function () {
             a.href = '/areaencargados/empleado/baja/verempleado/'+ empleado.correo;
             a.textContent = 'Ver empleado datos completos';
             div.style.display = 'grid';
-
+            div.style.textAlign = 'left';
+            divs.push(div);
         });
    }).catch(error => {
         console.error('Error:', error);
         alerta(error);
    });
+})
+
+
+document.querySelector("#btn-buscar").addEventListener('click', function () {
+
+    let texto = document.querySelector("#buscador").value;
+    if (texto !== '') {
+        divs.forEach(div => {
+            if (div.id.includes(texto)) {
+                div.style.display = 'grid';
+            } else {
+                div.style.display = 'none';
+            }
+        });
+    }
+});
+
+document.querySelector("#btn-clear").addEventListener('click', function () {
+    document.querySelector("#buscador").value = '';
+    divs.forEach(div => {
+        div.style.display = 'grid';
+    });
 });

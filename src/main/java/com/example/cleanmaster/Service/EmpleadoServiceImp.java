@@ -87,4 +87,13 @@ public class EmpleadoServiceImp implements  EmpleadoService {
         empleado_tiposServiciosEntities.setIdTipoServicio(idservicio);
         empleadosTiposServiciosRepository.save(empleado_tiposServiciosEntities);
     }
+
+    @Override
+    public List<EmpleadoDTO> findAllByIdEncargado(Integer id) {
+        List<EmpleadoDTO> empleadoDTOS = new ArrayList<>();
+        for(EmpleadoEntities e : empleadoRepository.findAllByIdEncargada(id)){
+            empleadoDTOS.add(EmpleadoDTO.ConvertToDTO(e));
+        }
+        return empleadoDTOS;
+    }
 }

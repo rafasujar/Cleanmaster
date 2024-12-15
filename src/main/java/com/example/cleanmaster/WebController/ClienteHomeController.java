@@ -75,4 +75,15 @@ public class ClienteHomeController {
         ModelAndView modelAndView = new ModelAndView("./paginas/verhistorial.html");
         return modelAndView;
     }
+    @GetMapping("/areaclientes/home/{id}/vermensajes")
+    public ModelAndView verMensajes() {
+        return new ModelAndView("./paginas/vermensajes.html");
+    }
+
+
+    @GetMapping("/areaclientes/home/{id}/nuevomensajes")
+    public ModelAndView nuevoMensaje() {
+        return new ModelAndView("./paginas/nuevomensajes.html");
+    }
+
 }

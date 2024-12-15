@@ -30,7 +30,11 @@ window.addEventListener('load', function() {
                     }
                     break;
                 case 'btn-contacto':
-                    iframe.src = location.href + '/vercontactos';
+                    iframe.src = location.href + '/vermensajes';
+                    contendorButton.classList.remove('oculto');
+                    buttonevn.innerHTML = '';
+                    let nuevomensaje = crearElementoTexto('a', 'nuevo mensaje', buttonevn);
+                    nuevomensaje.href = location.href + '/nuevomensajes';
                     break;
                 case 'btn-historial':
                     iframe.src = location.href + '/verhistorial';
@@ -68,6 +72,7 @@ window.addEventListener('load', function() {
         switch (datos.id) {
             case 'btn-agenda':
                 mostrarOverlay();
+                overlayContent.style.width = 'calc(100% - 30px)';
                 let overlayiframe = crearElemento('iframe', overlayContent);
                overlayiframe.src = encodeURI("https://www.google.com/maps?q="+datos.direccion+"&output=embed");
                 overlayiframe.style.border = "none";
@@ -103,10 +108,9 @@ window.addEventListener('load', function() {
                         })
                     }).then(response => {
                         if (response.ok) {
-                            alert('ln-86:Reserva finalizada');
                             overlay.classList.add('oculto');
                             overlay.classList.remove('overlay');
-                            overlayContent.innerHTML = '';
+
                         } else {
                             overlayContent.innerHTML = 'codigo de error: ' + response.status;
                         }
@@ -137,6 +141,27 @@ window.addEventListener('load', function() {
             case 'btn-administrar':
                 window.location.href = datos.response;
                 break;
+            case 'btn-contacto':
+                let mensaje = datos.mensaje;
+                mostrarOverlay();
+                overlayContent.style = ' '
+                let contenedor = crearElemento('div', overlayContent);
+                contenedor.classList.add('overlay-mensaje')
+                crearElementoTexto('h2', 'De: '+mensaje.emisor, contenedor);
+                crearElementoTexto('h2', 'Para: '+mensaje.receptor, contenedor);
+                crearElementoTexto('h2', 'Asunto: '+mensaje.asunto, contenedor);
+                crearElementoTexto('p', mensaje.mensaje, contenedor);
+                let butonCerrar2 = crearElemento('button', contenedor);
+                crearElementoTexto('a', 'Cerrar', butonCerrar2);
+                butonCerrar2.classList.add('button-special');
+                butonCerrar2.style.boxShadow = '0px 0px 5px 0px #000';
+                butonCerrar2.style.width = '100px';
+                butonCerrar2.addEventListener('click', function() {
+                    overlay.classList.add('oculto');
+                    overlay.classList.remove('overlay');
+                    overlayContent.innerHTML = '';
+                });
+                break;
             default:
                 break;
         }
@@ -146,6 +171,7 @@ window.addEventListener('load', function() {
 
 
 function mostrarOverlay() {
+    overlayContent.innerHTML = '';
     overlay.classList.remove('oculto');
     overlay.classList.add('overlay');
 }

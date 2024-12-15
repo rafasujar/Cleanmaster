@@ -15,4 +15,5 @@ public interface EmpleadoService {
     EmpleadoDTO existsByCorreo(String correo);
     void    asignarServicio(Integer id, Integer id1);
 
+    List<EmpleadoDTO> findAllByIdEncargado(Integer id);
 }

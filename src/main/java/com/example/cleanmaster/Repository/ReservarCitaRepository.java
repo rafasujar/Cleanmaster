@@ -3,6 +3,7 @@ package com.example.cleanmaster.Repository;
 import com.example.cleanmaster.models.entities.ReservarCitaEntities;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -24,4 +25,16 @@ public interface ReservarCitaRepository extends JpaRepository<ReservarCitaEntiti
 
     Collection<ReservarCitaEntities> findAllByIdEmpleadoAndFinalizadaReserva(int i, boolean b);
 
+
+    @Query("SELECT r FROM ReservarCitaEntities r " +
+            "WHERE r.idEmpleado = :idEmpleado " +
+            "AND FUNCTION('MONTH', r.fecha) = :dayOfMonth " )
+    Collection<ReservarCitaEntities> findAllByIdEmpleadoAndDayOfMonth(@Param("idEmpleado") Integer idEmpleado,
+                                                                      @Param("dayOfMonth") int dayOfMonth);
+
+    @Query("SELECT r FROM ReservarCitaEntities r " +
+            "WHERE r.idCliente = :idCliente " +
+            "AND FUNCTION('MONTH', r.fecha) = :dayOfMonth " )
+    Collection<ReservarCitaEntities> findAllByIdClienteAndDayOfMonth(@Param("idCliente") Integer idCliente,
+                                                                     @Param("dayOfMonth") int dayOfMonth);
 }

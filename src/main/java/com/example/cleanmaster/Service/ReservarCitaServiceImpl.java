@@ -65,4 +65,19 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
     public List<ReservarCitaDTO> obtenerReservasParaHorarios() {
         return reservarCitaRepository.findAllByIdEmpleadoAndFinalizadaReserva(0, false).stream().map(ReservarCitaDTO::ConvertToDTO).toList();
     }
+
+    @Override
+    public List<ReservarCitaDTO> obtenerReservasParaMensajePorIdEmpleadoSegunMes(Integer idEmpleado) {
+       Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.of(reservarCitaRepository.findAllByIdEmpleadoAndDayOfMonth(idEmpleado, LocalDate.now().getMonthValue()).stream().map(ReservarCitaDTO::ConvertToDTO).toList());
+        return reservarCitaDTOList.orElse(null);
+    }
+
+    @Override
+    public List<ReservarCitaDTO> obtenerReservasParaMensajePorIdClienteSegunMes(Integer idCliente) {
+        Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.of(reservarCitaRepository.findAllByIdClienteAndDayOfMonth(idCliente, LocalDate.now().getMonthValue()).stream().map(ReservarCitaDTO::ConvertToDTO).toList());
+
+        return reservarCitaDTOList.orElse(null);
+    }
+
+
 }

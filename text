@@ -1,4 +1,8 @@
-cambiar base de datos reserva cita - >  direcciones varchar al id de direcciones
-el propio navegador se encargar de coger la direccion del empleado.
+por hacer:
+fallo de seguridad donde todo el munod puede acceder a traves de la url #1
 
-añadio campo a reservas para indicar si hay una reserva finalizada o no
+falta probar docker #1
+
+terminar presentacion de paginas #2
+
+falta boton de cerrar sesion #3

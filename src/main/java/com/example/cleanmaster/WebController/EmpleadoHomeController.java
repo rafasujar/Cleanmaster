@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -62,5 +61,14 @@ public class EmpleadoHomeController {
         return modelAndView;
     }
 
+    @GetMapping("/areaempleados/home/{id}/vermensajes")
+    public ModelAndView verMensajes() {
+        return new ModelAndView("./paginas/vermensajes.html");
+    }
+
+    @GetMapping("/areaempleados/home/1/nuevomensajes")
+    public ModelAndView nuevoMensaje() {
+        return new ModelAndView("./paginas/nuevomensajes.html");
+    }
 
 }

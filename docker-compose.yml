@@ -1,0 +1,42 @@
+## version preliminar
+version: '3.8'
+services:
+  java-app:
+    image: maven:3.8.7-eclipse-temurin-23
+    container_name: java-maven-app
+    depends_on:
+      - mysql-db
+    volumes:
+      - ./app:/usr/src/app
+      - ./scripts:/usr/src/scripts # Carpeta donde se ubican los scripts
+    working_dir: /usr/src/app
+    command: >
+      bash -c "
+      /usr/src/scripts/setup.sh && \
+      mvn clean install"
+    ports:
+      - "8080:8080" # Cambia esto si tu aplicación usa otro puerto
+    environment:
+      - MAVEN_OPTS=-Xmx512m
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+
+volumes:
+  db_data:
+
+# Notas:
+# 1. La carpeta 'app' debe contener tu proyecto Java con el archivo pom.xml de Maven.
+# 2. La carpeta 'scripts' debe contener el script setup.sh que se ejecutará antes de Maven.
+# 3. La base de datos MySQL estará disponible en el puerto 3306 con las credenciales especificadas.
+# 4. Ajusta los puertos y variables según tus necesidades específicas.

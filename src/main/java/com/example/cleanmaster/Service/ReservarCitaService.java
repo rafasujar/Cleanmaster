@@ -14,4 +14,9 @@ public interface ReservarCitaService {
     List<ReservarCitaDTO>historialCliente(int idCliente);
 
     List<ReservarCitaDTO> obtenerReservasParaHorarios();
+
+    List<ReservarCitaDTO> obtenerReservasParaMensajePorIdEmpleadoSegunMes( Integer idEmpleado);
+
+    List<ReservarCitaDTO> obtenerReservasParaMensajePorIdClienteSegunMes( Integer idCliente);
+
 }
