@@ -19,5 +19,6 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntities, Inte
 
     Optional<EmpleadoEntities>  findById(Integer id);
 
+
     List<EmpleadoEntities> findAllByIdEncargada(Integer id);
 }

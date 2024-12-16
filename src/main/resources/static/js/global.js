@@ -22,6 +22,7 @@ window.addEventListener('load', function() {
                 });
             }
         });
+
     }
     //logica para bloquear el acceso a la pagina si no tienes autorizacion
 

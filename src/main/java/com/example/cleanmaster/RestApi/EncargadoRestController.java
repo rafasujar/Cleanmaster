@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -104,10 +105,15 @@ public class EncargadoRestController {
             if (!encargadoService.esEncargado(node.get("id").asInt())) {
                 return ResponseEntity.status(401).body("No autorizado");
             }
-            return ResponseEntity.ok(empleadoService.findAllByIdEncargado(node.get("id").asInt()));
+
+            List<EmpleadoDTO> empleados = empleadoService.findAllByIdEncargado(node.get("id").asInt());
+            System.out.println(empleados.toString());
+            return ResponseEntity.ok(empleados);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al cargar empleados");
         }
     }
+
+
 
 }

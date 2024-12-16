@@ -63,7 +63,7 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
 
     @Override
     public List<ReservarCitaDTO> obtenerReservasParaHorarios() {
-        return reservarCitaRepository.findAllByIdEmpleadoAndFinalizadaReserva(0, false).stream().map(ReservarCitaDTO::ConvertToDTO).toList();
+        return reservarCitaRepository.findAllByIdEmpleadoAndFinalizadaReserva(null, false).stream().map(ReservarCitaDTO::ConvertToDTO).toList();
     }
 
     @Override
@@ -77,6 +77,11 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
         Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.of(reservarCitaRepository.findAllByIdClienteAndDayOfMonth(idCliente, LocalDate.now().getMonthValue()).stream().map(ReservarCitaDTO::ConvertToDTO).toList());
 
         return reservarCitaDTOList.orElse(null);
+    }
+
+    @Override
+    public ReservarCitaDTO findById(Integer id) {
+        return reservarCitaRepository.findById(id).map(ReservarCitaDTO::ConvertToDTO).orElse(null);
     }
 
 

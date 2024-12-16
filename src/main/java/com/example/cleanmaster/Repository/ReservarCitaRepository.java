@@ -23,7 +23,8 @@ public interface ReservarCitaRepository extends JpaRepository<ReservarCitaEntiti
 
     List<ReservarCitaEntities> findAllByIdClienteAndFinalizadaReserva(int idCliente, boolean b);
 
-    Collection<ReservarCitaEntities> findAllByIdEmpleadoAndFinalizadaReserva(int i, boolean b);
+    @Query("SELECT r FROM ReservarCitaEntities r WHERE r.idEmpleado is null AND r.finalizadaReserva = false")
+    Collection<ReservarCitaEntities> findAllByIdEmpleadoAndFinalizadaReserva(Integer i, boolean b);
 
 
     @Query("SELECT r FROM ReservarCitaEntities r " +

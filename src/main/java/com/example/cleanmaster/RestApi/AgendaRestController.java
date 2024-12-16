@@ -230,12 +230,31 @@ public class AgendaRestController {
             ObjectMapper mapper = new ObjectMapper();
             String tokenDecoded = utilsCleanMaster.decoderUser(token);
             JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+            Map<Integer, ArrayNode> reservas = Map.of(
+                    1, mapper.createArrayNode(),
+                    2, mapper.createArrayNode(),
+                    3, mapper.createArrayNode(),
+                    4, mapper.createArrayNode(),
+                    5, mapper.createArrayNode(),
+                    6, mapper.createArrayNode(),
+                    7, mapper.createArrayNode()
+            );
             if (jsonNodeRoot.get("empleado").asBoolean()) {
-               List<ReservarCitaDTO> reservarCitaDTOList = reservarCitaService.obtenerReservasParaHorarios();
+               List<ReservarCitaDTO> reservarCitaDTOList = reservarCitaService. obtenerReservasParaHorarios();
                 if (reservarCitaDTOList.isEmpty()) {
                     return ResponseEntity.status(404).body("No hay reservas para esta semana");
                 }
-                return ResponseEntity.ok(reservarCitaDTOList);
+
+                for (ReservarCitaDTO r : reservarCitaDTOList) {
+                    ObjectNode mapjson = mapper.createObjectNode();
+                    mapjson.put("id", r.getId());
+                    mapjson.put("fecha", r.getFecha().toString());
+                    mapjson.put("tipo", tiposServiciosService.getTipoById(r.getIdTipoServicio()).getNombre());
+                    mapjson.put("cliente", clienteService.findById(r.getIdCliente()).getNombre());
+                    mapjson.put("idcliente", r.getIdCliente());
+                    reservas.get(r.getFecha().getDayOfWeek().getValue()).add(mapjson);
+                }
+                return ResponseEntity.ok(reservas);
             }
             return ResponseEntity.badRequest().body("No tienes permisos para ver reservas");
         } catch (JsonProcessingException e) {
@@ -278,6 +297,33 @@ public class AgendaRestController {
                 arrayNode.add(mapjson);
             }
             return ResponseEntity.ok(arrayNode);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    @PostMapping("/api/asignarempleadoreserva")
+    public ResponseEntity<?> asignarEmpleadoReserva(@RequestHeader("Authorization") String token, @RequestBody ReservarCitaDTO reserva) {
+        if (token.isEmpty()) {
+            return ResponseEntity.badRequest().body("empty token ");
+        }
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            String tokenDecoded = utilsCleanMaster.decoderUser(token);
+            JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
+            Integer idEmpleado = reserva.getIdEmpleado();
+            if (!jsonNodeRoot.get("empleado").asBoolean()) {
+                return ResponseEntity.badRequest().body("No tienes permisos para asignar empleados a reservas");
+            }
+             reserva = reservarCitaService. findById(reserva.getId());
+            if (reserva == null) {
+                return ResponseEntity.badRequest().body("Reserva no encontrada");
+            }
+            reserva.setIdEmpleado(idEmpleado);
+            reservarCitaService.save(reserva);
+            return ResponseEntity.ok("Empleado asignado");
+
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
