@@ -29,13 +29,13 @@ public interface ReservarCitaRepository extends JpaRepository<ReservarCitaEntiti
 
     @Query("SELECT r FROM ReservarCitaEntities r " +
             "WHERE r.idEmpleado = :idEmpleado " +
-            "AND FUNCTION('MONTH', r.fecha) = :dayOfMonth " )
+            "AND FUNCTION('MONTH', r.fecha) = :dayOfMonth ")
     Collection<ReservarCitaEntities> findAllByIdEmpleadoAndDayOfMonth(@Param("idEmpleado") Integer idEmpleado,
                                                                       @Param("dayOfMonth") int dayOfMonth);
 
     @Query("SELECT r FROM ReservarCitaEntities r " +
             "WHERE r.idCliente = :idCliente " +
-            "AND FUNCTION('MONTH', r.fecha) = :dayOfMonth " )
+            "AND FUNCTION('MONTH', r.fecha) = :dayOfMonth ")
     Collection<ReservarCitaEntities> findAllByIdClienteAndDayOfMonth(@Param("idCliente") Integer idCliente,
                                                                      @Param("dayOfMonth") int dayOfMonth);
 }

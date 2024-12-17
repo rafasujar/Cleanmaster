@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class EncargadoServiceImp implements EncargadoService {
     @Autowired
     private EncargadoRepository encargadoRepository;
+
     @Override
     public boolean esEncargado(int id) {
         return encargadoRepository.existsByIdEmpleados(id);

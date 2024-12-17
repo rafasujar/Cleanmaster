@@ -15,10 +15,10 @@ public class MensajesServicesImp implements MensajesService {
 
     @Override
     public List<MensajeDTO> findAllByIdEmpleado(Integer idEmpleado) {
-       if (mensajesRepository.findAllByIdEmpleado(idEmpleado).isPresent()) {
-           return mensajesRepository.findAllByIdEmpleado(idEmpleado).get().stream().map(MensajeDTO::ConvertToDTO).collect(Collectors.toList());
-       }
-       return  null;
+        if (mensajesRepository.findAllByIdEmpleado(idEmpleado).isPresent()) {
+            return mensajesRepository.findAllByIdEmpleado(idEmpleado).get().stream().map(MensajeDTO::ConvertToDTO).collect(Collectors.toList());
+        }
+        return null;
     }
 
     @Override

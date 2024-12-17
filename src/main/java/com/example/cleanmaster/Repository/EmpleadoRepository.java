@@ -3,7 +3,6 @@ package com.example.cleanmaster.Repository;
 
 import com.example.cleanmaster.models.entities.EmpleadoEntities;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +16,7 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntities, Inte
 
     Optional<EmpleadoEntities> findByCorreo(String correo);
 
-    Optional<EmpleadoEntities>  findById(Integer id);
+    Optional<EmpleadoEntities> findById(Integer id);
 
 
     List<EmpleadoEntities> findAllByIdEncargada(Integer id);

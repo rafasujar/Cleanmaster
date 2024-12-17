@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class ContactoController {
 
     @GetMapping("/contactar")
-    public ModelAndView Contacto(){
+    public ModelAndView Contacto() {
         return new ModelAndView("./paginas/contacto.html");
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class TerminosController {
 
     @GetMapping("/terminos")
-    public ModelAndView Terminos(){
+    public ModelAndView Terminos() {
         return new ModelAndView("./paginas/terminos.html");
     }
 

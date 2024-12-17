@@ -30,7 +30,7 @@ public class EncargadoRestController {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             if (!encargadoService.esEncargado(node.get("id").asInt())) {
                 return ResponseEntity.status(401).body("No autorizado");
             }
@@ -51,7 +51,7 @@ public class EncargadoRestController {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             if (!encargadoService.esEncargado(node.get("id").asInt())) {
                 return ResponseEntity.status(401).body("No autorizado");
             }
@@ -78,7 +78,7 @@ public class EncargadoRestController {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             if (!encargadoService.esEncargado(node.get("id").asInt())) {
                 return ResponseEntity.status(401).body("No autorizado");
             }
@@ -101,7 +101,7 @@ public class EncargadoRestController {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             if (!encargadoService.esEncargado(node.get("id").asInt())) {
                 return ResponseEntity.status(401).body("No autorizado");
             }
@@ -113,7 +113,6 @@ public class EncargadoRestController {
             return ResponseEntity.status(500).body("Error al cargar empleados");
         }
     }
-
 
 
 }

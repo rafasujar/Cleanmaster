@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 
 @Service
 public class TiposServiciosServiceImp implements TiposServiciosService {
-     @Autowired
+    @Autowired
     private TiposServiciosRepository tiposServiciosRepository;
 
     @Override
     public TiposServiciosDTO getTipoById(int id) {
-        Optional<TiposServiciosEntities> servicios =  tiposServiciosRepository.findById(id);
+        Optional<TiposServiciosEntities> servicios = tiposServiciosRepository.findById(id);
         if (servicios.isPresent())
             return TiposServiciosDTO.ConvertToDTO(servicios.get());
         else

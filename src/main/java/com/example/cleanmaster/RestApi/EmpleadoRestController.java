@@ -25,41 +25,40 @@ public class EmpleadoRestController {
     public ResponseEntity<?> loginEmpleado(@RequestBody EmpleadoDTO empleadoDTO2) {
 
 
-            if (empleadoDTO2.getCorreo().isEmpty() && empleadoDTO2.getPassword().isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("El empleadodto2.getCorreo o la contraseña no pueden estar vacios");
-            }
+        if (empleadoDTO2.getCorreo().isEmpty() && empleadoDTO2.getPassword().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleadodto2.getCorreo o la contraseña no pueden estar vacios");
+        }
 
-            if (!empleadoDTO2.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("El empleadodto2.getCorreo no cumple con los requisitos de formato");
-            }
-            empleadoDTO2.setPassword(utilsCleanMaster.decodeBase54(empleadoDTO2.getPassword()));
-            if (!empleadoDTO2.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("La contraseña no cumple con los requisitos de seguridad");
-            }
+        if (!empleadoDTO2.getCorreo().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("El empleadodto2.getCorreo no cumple con los requisitos de formato");
+        }
+        empleadoDTO2.setPassword(utilsCleanMaster.decodeBase54(empleadoDTO2.getPassword()));
+        if (!empleadoDTO2.getPassword().matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("La contraseña no cumple con los requisitos de seguridad");
+        }
 
-           Optional<EmpleadoDTO> empleadoDTO = Optional.ofNullable(empleadoService.logearEmpleado(empleadoDTO2.getCorreo(), empleadoDTO2.getPassword()));
-            if (empleadoDTO.isPresent()) {
-                empleadoDTO2 = empleadoDTO.get();
+        Optional<EmpleadoDTO> empleadoDTO = Optional.ofNullable(empleadoService.logearEmpleado(empleadoDTO2.getCorreo(), empleadoDTO2.getPassword()));
+        if (empleadoDTO.isPresent()) {
+            empleadoDTO2 = empleadoDTO.get();
 
-                return ResponseEntity.ok(utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre()+" "+empleadoDTO2.getApellidos()));
+            return ResponseEntity.ok(utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre() + " " + empleadoDTO2.getApellidos()));
 
 
-            } else {
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("El empleado no fue encontrado");
         }
     }
 
 
-
     @PostMapping("/AreaEmpleado/api/resetpasswd")
-    public ResponseEntity<?> resepassword(@RequestBody String correo){
+    public ResponseEntity<?> resepassword(@RequestBody String correo) {
         StringBuilder passwd = new StringBuilder();
         Random random = new Random();
-        EmpleadoDTO empleadoDTO2 ;
+        EmpleadoDTO empleadoDTO2;
 
 
         if (!correo.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
@@ -87,7 +86,6 @@ public class EmpleadoRestController {
         return ResponseEntity.ok(true);
 
     }
-
 
 
     @PostMapping("areaempleados/home/{id}/savecambios")
@@ -121,7 +119,7 @@ public class EmpleadoRestController {
         empleadoDTO.setNumss(empleadoDTO2.get().getNumss());
         empleadoDTO.setIdEncargada(empleadoDTO2.get().getIdEncargada());
         empleadoService.Guardar(empleadoDTO);
-        return ResponseEntity.ok(utilsCleanMaster.generateToken(true, empleadoDTO.getId(), empleadoDTO.getCorreo(), empleadoDTO.getNombre()+" "+empleadoDTO.getApellidos()));
+        return ResponseEntity.ok(utilsCleanMaster.generateToken(true, empleadoDTO.getId(), empleadoDTO.getCorreo(), empleadoDTO.getNombre() + " " + empleadoDTO.getApellidos()));
     }
 
 }

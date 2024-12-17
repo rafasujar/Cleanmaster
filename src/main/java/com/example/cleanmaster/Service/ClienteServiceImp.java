@@ -30,9 +30,8 @@ public class ClienteServiceImp implements ClienteService {
 
     @Override
     public void registrarCliente(ClienteDTO clienteDTO) {
-         clienteRepository.save(ClienteDTO.ConvertToEntities(clienteDTO));
+        clienteRepository.save(ClienteDTO.ConvertToEntities(clienteDTO));
     }
-
 
 
     @Override

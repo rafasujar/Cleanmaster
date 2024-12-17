@@ -9,11 +9,12 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public ModelAndView Index(){
+    public ModelAndView Index() {
         return new ModelAndView("index.html");
     }
+
     @GetMapping("/inicio")
-    public ModelAndView Inicio(){
+    public ModelAndView Inicio() {
         return Index();
     }
 

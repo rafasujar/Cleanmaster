@@ -44,7 +44,7 @@ public class EmpleadoHomeController {
         modelAndView.addObject("apellidos", x.getApellidos());
         modelAndView.addObject("email", x.getCorreo());
         modelAndView.addObject("telefono", x.getMovil());
-        modelAndView.addObject("tipos", tiposServiciosService.getEmpleadoServicos(id).stream().map(r->r.getNombre()).toList());
+        modelAndView.addObject("tipos", tiposServiciosService.getEmpleadoServicos(id).stream().map(r -> r.getNombre()).toList());
         return modelAndView;
     }
 
@@ -57,7 +57,7 @@ public class EmpleadoHomeController {
         modelAndView.addObject("apellidos", x.getApellidos());
         modelAndView.addObject("email", x.getCorreo());
         modelAndView.addObject("telefono", x.getMovil());
-        modelAndView.addObject("tipos", tiposServiciosService.getEmpleadoServicos(id).stream().map(r->r.getNombre()).toList());
+        modelAndView.addObject("tipos", tiposServiciosService.getEmpleadoServicos(id).stream().map(r -> r.getNombre()).toList());
         return modelAndView;
     }
 
@@ -66,7 +66,7 @@ public class EmpleadoHomeController {
         return new ModelAndView("./paginas/vermensajes.html");
     }
 
-    @GetMapping("/areaempleados/home/1/nuevomensajes")
+    @GetMapping("/areaempleados/home/{id}/nuevomensajes")
     public ModelAndView nuevoMensaje() {
         return new ModelAndView("./paginas/nuevomensajes.html");
     }

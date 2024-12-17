@@ -38,8 +38,8 @@ public class ClienteRestController {
         Optional<ClienteDTO> clienteDTO1 = Optional.ofNullable(clienteService.logearCliente(clienteDTO));
 
         if (clienteDTO1.isPresent()) {
-            clienteDTO  = clienteDTO1.get();
-            String respuesta = utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre());
+            clienteDTO = clienteDTO1.get();
+            String respuesta = utilsCleanMaster.generateToken(false, clienteDTO.getId(), clienteDTO.getCorreo(), clienteDTO.getNombre());
             return ResponseEntity.ok(respuesta);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
@@ -48,8 +48,8 @@ public class ClienteRestController {
         }
     }
 
-    @PostMapping("/AreaCliente/api/resetpasswd")
-    public ResponseEntity<?> resepassword(@RequestBody String correo){
+    @PostMapping("/areacliente/api/resetpasswd")
+    public ResponseEntity<?> resepassword(@RequestBody String correo) {
         StringBuilder passwd = new StringBuilder();
         Random random = new Random();
         ClienteDTO clienteDTO;
@@ -71,16 +71,16 @@ public class ClienteRestController {
         for (int i = 0; i < 8; i++) {
             passwd.append(random.nextInt(10));
         }
-            clienteDTO.setPassword(utilsCleanMaster.encodeBase64(passwd.toString()));
-            clienteService.registrarCliente(clienteDTO);
-            mailService.resetPassword(correo, passwd.toString());
-            return ResponseEntity.ok(true);
+        clienteDTO.setPassword(utilsCleanMaster.encodeBase64(passwd.toString()));
+        clienteService.registrarCliente(clienteDTO);
+        mailService.resetPassword(correo, passwd.toString());
+        return ResponseEntity.ok(true);
 
     }
 
 
     @PostMapping("/areaclientes/api/registro")
-    public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO clienteDTO){
+    public ResponseEntity<?> registrarCliente(@RequestBody ClienteDTO clienteDTO) {
 
         if (clienteDTO.getCorreo().isEmpty() && clienteDTO.getPassword().isEmpty() && clienteDTO.getNombre().isEmpty()) {
             return ResponseEntity.badRequest().body("los campos estan vacios");
@@ -93,7 +93,7 @@ public class ClienteRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("La contraseña no cumple con los requisitos de seguridad");
         }
-        if (!clienteDTO.getMovil().matches("^[67]\\d{8}$")){
+        if (!clienteDTO.getMovil().matches("^[67]\\d{8}$")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("El movil no cumple con los requisitos de formato");
         }
@@ -129,9 +129,8 @@ public class ClienteRestController {
 
         clienteDTO.setId(id);
         clienteService.save(clienteDTO);
-        return ResponseEntity.ok(utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre()));
+        return ResponseEntity.ok(utilsCleanMaster.generateToken(false, clienteDTO.getId(), clienteDTO.getCorreo(), clienteDTO.getNombre()));
     }
-
 
 
 }

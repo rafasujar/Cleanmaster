@@ -24,7 +24,7 @@ public class EncargadoAdmistracionController {
     @GetMapping("/areaencargados/empleado/alta")
     public ModelAndView altaEmpleado() {
         ModelAndView modelAndView = new ModelAndView("./paginas/modificarempleado.html");
-        modelAndView.addObject("nombre","");
+        modelAndView.addObject("nombre", "");
         modelAndView.addObject("correo", "");
         modelAndView.addObject("apellidos", "");
         modelAndView.addObject("telefono", "");
@@ -45,6 +45,7 @@ public class EncargadoAdmistracionController {
         ModelAndView modelAndView = new ModelAndView("./paginas/modificarHorarios.html");
         return modelAndView;
     }
+
     @GetMapping("/areaencargados/empleado/baja/verempleado/{correo}")
     public ModelAndView altaEmpleado(@PathVariable("correo") String correo) {
         EmpleadoDTO empleado = empleadoService.existsByCorreo(correo);

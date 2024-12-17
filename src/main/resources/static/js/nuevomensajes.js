@@ -52,7 +52,7 @@ window.addEventListener('load', function() {
             id: receptor
         }
 
-       fetch("/api/mensajes/crearMensaje", {
+       fetch("/api/mensajes/Mensaje", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -83,3 +83,4 @@ function alerta(mensaje) {
         document.getElementById('showerrors').style.display = 'none';
     }, 3000);
 }
+

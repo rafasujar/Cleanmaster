@@ -8,24 +8,24 @@ import org.springframework.web.servlet.ModelAndView;
 public class LoginClientesController {
 
     @GetMapping("/areaclientes/auth")
-    public ModelAndView LoginEmpleados(){
-        ModelAndView modelAndView =  new ModelAndView("./paginas/auth.html");
+    public ModelAndView LoginEmpleados() {
+        ModelAndView modelAndView = new ModelAndView("./paginas/auth.html");
         modelAndView.addObject("escliente", true);
-        modelAndView.addObject("apiUrl" , "/areaclientes/api/login");
+        modelAndView.addObject("apiUrl", "/areaclientes/api/login");
         return modelAndView;
     }
 
     @GetMapping("/areaclientes/passwd")
-    public ModelAndView RecuperarPasswd(){
-        ModelAndView modelAndView =  new ModelAndView("./paginas/resetpasswd.html");
+    public ModelAndView RecuperarPasswd() {
+        ModelAndView modelAndView = new ModelAndView("./paginas/resetpasswd.html");
         modelAndView.addObject("escliente", true);
-        modelAndView.addObject("apiUrl" , "/areacliente/api/resetpasswd");
+        modelAndView.addObject("apiUrl", "/areacliente/api/resetpasswd");
         return modelAndView;
     }
 
     @GetMapping("/areaclientes/registro")
-    public ModelAndView Registro(){
-        ModelAndView modelAndView =  new ModelAndView("./paginas/registro.html");
+    public ModelAndView Registro() {
+        ModelAndView modelAndView = new ModelAndView("./paginas/registro.html");
         return modelAndView;
     }
 }

@@ -2,12 +2,11 @@ package com.example.cleanmaster.WebController;
 
 
 import com.example.cleanmaster.Service.ClienteService;
-import com.example.cleanmaster.Service.DireccionesService;
-import com.example.cleanmaster.Service.TiposServiciosService;
 import com.example.cleanmaster.models.dto.ClienteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -50,15 +49,17 @@ public class ClienteHomeController {
     }
 
     @GetMapping("/areaclientes/home/{id}/nuevadireccion")
-    public  ModelAndView nuevaDireccion(){
+    public ModelAndView nuevaDireccion() {
         ModelAndView modelAndView = new ModelAndView("./paginas/nuevadireccion.html");
         return modelAndView;
     }
+
     @GetMapping("/areaclientes/home/{id}/verdirecciones")
-    public ModelAndView verDirecciones(){
+    public ModelAndView verDirecciones() {
         ModelAndView modelAndView = new ModelAndView("./paginas/verdirecciones.html");
         return modelAndView;
     }
+
     @GetMapping("/areaclientes/home/{id}/modificarperfil")
     public ModelAndView moidificarPerfil(@PathVariable("id") Integer id) {
         ClienteDTO x = clienteService.findById(id);
@@ -71,10 +72,11 @@ public class ClienteHomeController {
     }
 
     @GetMapping("/areaclientes/home/{id}/verhistorial")
-    public ModelAndView verHistorial(){
+    public ModelAndView verHistorial() {
         ModelAndView modelAndView = new ModelAndView("./paginas/verhistorial.html");
         return modelAndView;
     }
+
     @GetMapping("/areaclientes/home/{id}/vermensajes")
     public ModelAndView verMensajes() {
         return new ModelAndView("./paginas/vermensajes.html");

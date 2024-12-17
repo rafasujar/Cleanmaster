@@ -24,23 +24,25 @@ public class load {
     public ModelAndView load() {
         ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
         EmpleadoDTO empleadoDTO2 = empleadoService.findById(2);
-        String token =  utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre()+" "+empleadoDTO2.getApellidos());
+        String token = utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre() + " " + empleadoDTO2.getApellidos());
         modelAndView.addObject("token", token);
         return modelAndView;
     }
+
     @GetMapping("/loadEncargado")
     public ModelAndView loade() {
         ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
         EmpleadoDTO empleadoDTO2 = empleadoService.findById(1);
-        String token =  utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre()+" "+empleadoDTO2.getApellidos());
+        String token = utilsCleanMaster.generateToken(true, empleadoDTO2.getId(), empleadoDTO2.getCorreo(), empleadoDTO2.getNombre() + " " + empleadoDTO2.getApellidos());
         modelAndView.addObject("token", token);
         return modelAndView;
     }
+
     @GetMapping("/loadCliente")
     public ModelAndView load1() {
         ModelAndView modelAndView = new ModelAndView("./paginas/load.html");
         ClienteDTO clienteDTO = clienteService.findById(1);
-        String token =  utilsCleanMaster.generateToken(false, clienteDTO.getId(),clienteDTO.getCorreo(), clienteDTO.getNombre());
+        String token = utilsCleanMaster.generateToken(false, clienteDTO.getId(), clienteDTO.getCorreo(), clienteDTO.getNombre());
         modelAndView.addObject("token", token);
         return modelAndView;
     }

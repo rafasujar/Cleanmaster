@@ -9,7 +9,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class DireccionesRestController {
@@ -27,7 +30,7 @@ public class DireccionesRestController {
             JsonNode jsonNodeRoot = mapper.readTree(tokenDecoded);
             if (jsonNodeRoot.get("empleado").asBoolean()) {
                 return ResponseEntity.badRequest().body("No tienes permisos para obtener direcciones");
-            }else{
+            } else {
                 return ResponseEntity.ok(direccionesService.findAllByIdCliente(jsonNodeRoot.get("id").asInt()));
             }
         } catch (JsonProcessingException e) {
@@ -37,7 +40,7 @@ public class DireccionesRestController {
     }
 
     @PostMapping("/api/direciones/guardarNuevaDireccion")
-    public ResponseEntity<?> guardarNuevaDireccion(@RequestHeader("Authorization") String token, @RequestBody DireccionesDTO direccionesDTO){
+    public ResponseEntity<?> guardarNuevaDireccion(@RequestHeader("Authorization") String token, @RequestBody DireccionesDTO direccionesDTO) {
         if (token.isEmpty()) {
             return ResponseEntity.badRequest().body("empty token ");
         }
@@ -47,7 +50,7 @@ public class DireccionesRestController {
             JsonNode jsonNodeRoot = mapper.readTree(decodedToken);
             if (jsonNodeRoot.get("empleado").asBoolean()) {
                 return ResponseEntity.badRequest().body("No tienes permisos para guardar direcciones");
-            }else{
+            } else {
                 direccionesDTO.setIdCliente(jsonNodeRoot.get("id").asInt());
                 direccionesService.save(direccionesDTO);
                 return ResponseEntity.ok("Direccion guardada correctamente");
@@ -59,7 +62,7 @@ public class DireccionesRestController {
     }
 
     @PostMapping("/api/direciones/eleminarDireccion")
-    public ResponseEntity<?> eleminarDireccion(@RequestHeader("Authorization") String token, @RequestBody DireccionesDTO direccionesDTO){
+    public ResponseEntity<?> eleminarDireccion(@RequestHeader("Authorization") String token, @RequestBody DireccionesDTO direccionesDTO) {
         if (token.isEmpty()) {
             return ResponseEntity.badRequest().body("empty token ");
         }
@@ -69,7 +72,7 @@ public class DireccionesRestController {
             JsonNode jsonNodeRoot = mapper.readTree(decodedToken);
             if (jsonNodeRoot.get("empleado").asBoolean()) {
                 return ResponseEntity.badRequest().body("No tienes permisos para guardar direcciones");
-            }else{
+            } else {
                 direccionesDTO.setIdCliente(jsonNodeRoot.get("id").asInt());
                 direccionesService.delete(direccionesDTO);
                 return ResponseEntity.ok("Direccion eliminada correctamente");

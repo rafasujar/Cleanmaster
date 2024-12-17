@@ -35,7 +35,7 @@ public class MensajesRestController {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             List<MensajeDTO> mensajes;
             if (node.get("empleado").asBoolean()) {
                 mensajes = mensajesService.findAllByIdEmpleado(node.get("id").asInt());
@@ -46,21 +46,21 @@ public class MensajesRestController {
                 return ResponseEntity.status(404).body("No hay mensajes");
             }
 
-           return ResponseEntity.ok(mensajes);
+            return ResponseEntity.ok(mensajes);
         } catch (Exception e) {
             log.error("e: ", e);
         }
         return ResponseEntity.status(500).body("Error al obtener mensajes");
     }
 
-    @PostMapping("/api/mensajes/crearMensaje")
-    public ResponseEntity<?> crearMensaje(@RequestHeader("Authorization") String token,@RequestBody MensajeDTO me) {
+    @PostMapping("/api/mensajes/Mensaje")
+    public ResponseEntity<?> crearMensaje(@RequestHeader("Authorization") String token, @RequestBody MensajeDTO me) {
         if (token.isEmpty()) {
             return ResponseEntity.status(401).body("No autorizado");
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             if (node.get("empleado").asBoolean()) {
                 me.setIdEmpleado(node.get("id").asInt());
                 me.setIdCliente(me.getId());

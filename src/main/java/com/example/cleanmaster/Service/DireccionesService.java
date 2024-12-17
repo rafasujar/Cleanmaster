@@ -10,5 +10,6 @@ public interface DireccionesService {
     List<DireccionesDTO> findAllByIdCliente(Integer id);
 
     void save(DireccionesDTO direccionesDTO);
-    void delete (DireccionesDTO direccionesDTO);
+
+    void delete(DireccionesDTO direccionesDTO);
 }

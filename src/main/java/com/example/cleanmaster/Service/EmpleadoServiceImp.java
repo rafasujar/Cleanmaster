@@ -14,17 +14,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class EmpleadoServiceImp implements  EmpleadoService {
+public class EmpleadoServiceImp implements EmpleadoService {
 
     @Autowired
     private EmpleadoRepository empleadoRepository;
 
     @Autowired
     private EmpleadosTiposServiciosRepository empleadosTiposServiciosRepository;
+
     @Override
     public List<EmpleadoDTO> findAll() {
         List<EmpleadoDTO> empleadoDTOS = new ArrayList<>();
-        for(EmpleadoEntities e : empleadoRepository.findAll()){
+        for (EmpleadoEntities e : empleadoRepository.findAll()) {
             empleadoDTOS.add(EmpleadoDTO.ConvertToDTO(e));
         }
         return empleadoDTOS;
@@ -48,33 +49,33 @@ public class EmpleadoServiceImp implements  EmpleadoService {
 
     @Override
     public EmpleadoDTO logearEmpleado(String correo, String password) {
-       Optional< EmpleadoEntities> user = empleadoRepository.findByCorreo(correo);
+        Optional<EmpleadoEntities> user = empleadoRepository.findByCorreo(correo);
         if (user.isPresent()) {
 
 
-        EmpleadoEntities entity = user.get();
-        String decodepass = utilsCleanMaster.decodeBase54(entity.getPassword());
+            EmpleadoEntities entity = user.get();
+            String decodepass = utilsCleanMaster.decodeBase54(entity.getPassword());
             System.out.println("decodepass: [" + decodepass + "]");
             System.out.println("password: [" + password + "]");
-        if (decodepass.equals(password)) {
-            return EmpleadoDTO.ConvertToDTO(entity);
-        }
+            if (decodepass.equals(password)) {
+                return EmpleadoDTO.ConvertToDTO(entity);
+            }
         }
         return null;
     }
 
     @Override
     public EmpleadoDTO findById(Integer id) {
-       if (id != null){
-           return empleadoRepository.findById(id).map(EmpleadoDTO::ConvertToDTO).orElse(null);
-       }
+        if (id != null) {
+            return empleadoRepository.findById(id).map(EmpleadoDTO::ConvertToDTO).orElse(null);
+        }
         return null;
     }
 
     @Override
     public EmpleadoDTO existsByCorreo(String correo) {
         Optional<EmpleadoEntities> empleadoEntities = empleadoRepository.findByCorreo(correo);
-        if (empleadoEntities.isPresent()){
+        if (empleadoEntities.isPresent()) {
             return EmpleadoDTO.ConvertToDTO(empleadoEntities.get());
         }
         return null;
@@ -91,7 +92,7 @@ public class EmpleadoServiceImp implements  EmpleadoService {
     @Override
     public List<EmpleadoDTO> findAllByIdEncargado(Integer id) {
         List<EmpleadoDTO> empleadoDTOS = new ArrayList<>();
-        for(EmpleadoEntities e : empleadoRepository.findAllByIdEncargada(id)){
+        for (EmpleadoEntities e : empleadoRepository.findAllByIdEncargada(id)) {
             empleadoDTOS.add(EmpleadoDTO.ConvertToDTO(e));
         }
         return empleadoDTOS;

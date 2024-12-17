@@ -116,3 +116,18 @@ function crearElemento(tag, padre) {
     padre.appendChild(elemento);
     return elemento;
 }
+
+document.querySelector('select#semana').addEventListener('change', function () {
+    let divscontendeores = document.querySelectorAll('#contendor-servicios > div');
+    let selectedValue = this.value;
+
+    divscontendeores.forEach(div => {
+        if (selectedValue === '0') {
+            div.style.display = 'flex';
+            div.style.flexWrap = 'wrap';
+        } else {
+            div.style.display = div.id === selectedValue ? 'grid' : 'none';
+        }
+    });
+
+});

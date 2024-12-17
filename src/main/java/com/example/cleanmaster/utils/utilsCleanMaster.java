@@ -5,14 +5,13 @@ import java.util.Base64;
 
 public class utilsCleanMaster {
 
-    public static String encodeBase64(String texto){
+    public static String encodeBase64(String texto) {
         Base64.Encoder encoder = Base64.getEncoder();
-        return  encoder.encodeToString(texto.getBytes(StandardCharsets.UTF_8));
+        return encoder.encodeToString(texto.getBytes(StandardCharsets.UTF_8));
     }
 
 
-
-    public static String decodeBase54 (String texto){
+    public static String decodeBase54(String texto) {
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] decodedByteArray = decoder.decode(texto);
         return new String(decodedByteArray, StandardCharsets.UTF_8);
@@ -41,7 +40,7 @@ public class utilsCleanMaster {
         respuesta = respuesta.replace("'", "\"");
         respuesta = respuesta.replace(":", "+");
         respuesta = respuesta.replace("\"", "/");
-       return utilsCleanMaster.encodeBase64(respuesta);
+        return utilsCleanMaster.encodeBase64(respuesta);
     }
 
 }

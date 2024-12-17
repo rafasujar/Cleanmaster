@@ -2,7 +2,7 @@
     let apiurl = document.querySelector("#apiUrl").value;
 document.getElementById('submit').addEventListener('click', function() {
     let correo = document.querySelector("#correo").value ;
-    alert('correo: ' + correo+'  &&  apiurl: '+apiurl);
+
     if (correo === '') {
         alerta('Debes ingresar un correo');
         return;
@@ -17,7 +17,7 @@ document.getElementById('submit').addEventListener('click', function() {
             },
             body: correo
         }).then(function(response) {
-            alert(response.status);
+
             if (response.status === 404) {
                 alerta('No existe el usuario');
                 document.getElementById('correo').value = '';
@@ -33,8 +33,7 @@ document.getElementById('submit').addEventListener('click', function() {
             }
             throw new Error('Error en la respuesta: ' + response.status);
          }).then(function(data) {
-             console.log(JSON.stringify(data));
-             console.log(data.toString());
+
              let respuesta = JSON.stringify(data);
              if(data === true ){
                alert('Correo enviado');

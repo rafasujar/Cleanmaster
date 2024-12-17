@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,17 +18,16 @@ public class SeguridadRestApiController {
         }
         try {
             ObjectMapper mapper = new ObjectMapper();
-            JsonNode node  = mapper.readTree(utilsCleanMaster.decoderUser(token));
+            JsonNode node = mapper.readTree(utilsCleanMaster.decoderUser(token));
             if (node.get("empleado").asBoolean()) {
-                return ResponseEntity.ok("/areaempleados/home/"+node.get("id").asInt());
+                return ResponseEntity.ok("/areaempleados/home/" + node.get("id").asInt());
             } else {
-                return ResponseEntity.ok("/areaclientes/home/"+node.get("id").asInt());
+                return ResponseEntity.ok("/areaclientes/home/" + node.get("id").asInt());
             }
-        }catch (Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(500).body("Error al obtener mensajes");
         }
     }
-
 
 
 }

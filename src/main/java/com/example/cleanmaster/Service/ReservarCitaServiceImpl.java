@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ReservarCitaServiceImpl implements ReservarCitaService{
+public class ReservarCitaServiceImpl implements ReservarCitaService {
     @Autowired
     private ReservarCitaRepository reservarCitaRepository;
 
@@ -20,9 +20,9 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
     public List<ReservarCitaDTO> reservasPorClienteEntreLunesYDomingo(Integer idCliente, LocalDate lunes, LocalDate domingo) {
 
         List<ReservarCitaDTO> reservarCitaDTOList = new ArrayList<>();
-               for (ReservarCitaEntities e : reservarCitaRepository.getReservarPorClienteEntreLunesYDomingo(idCliente, lunes, domingo)){
-                     reservarCitaDTOList.add(ReservarCitaDTO.ConvertToDTO(e));
-               }
+        for (ReservarCitaEntities e : reservarCitaRepository.getReservarPorClienteEntreLunesYDomingo(idCliente, lunes, domingo)) {
+            reservarCitaDTOList.add(ReservarCitaDTO.ConvertToDTO(e));
+        }
 
         return Optional.of(reservarCitaDTOList).orElse(null);
     }
@@ -30,7 +30,7 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
     @Override
     public List<ReservarCitaDTO> reservasPorEmpleadosEntreLunesYDomingo(Integer idEmpleado, LocalDate lunes, LocalDate domingo) {
         List<ReservarCitaDTO> reservarCitaDTOList = new ArrayList<>();
-        for (ReservarCitaEntities e : reservarCitaRepository.getReservarPorEmpleadoEntreLunesYDomingo(idEmpleado, lunes, domingo)){
+        for (ReservarCitaEntities e : reservarCitaRepository.getReservarPorEmpleadoEntreLunesYDomingo(idEmpleado, lunes, domingo)) {
             reservarCitaDTOList.add(ReservarCitaDTO.ConvertToDTO(e));
         }
 
@@ -40,12 +40,12 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
     @Override
     public boolean finalizarReserva(Integer idReserva, Integer idEmpleado) {
         Optional<ReservarCitaEntities> reserva = reservarCitaRepository.findByIdAndAndIdEmpleado(idReserva, idEmpleado);
-        if (reserva.isPresent()){
+        if (reserva.isPresent()) {
             ReservarCitaEntities r = reserva.get();
             r.setFinalizadaReserva(true);
             reservarCitaRepository.save(r);
             return true;
-        }else {
+        } else {
             return false;
         }
 
@@ -68,7 +68,7 @@ public class ReservarCitaServiceImpl implements ReservarCitaService{
 
     @Override
     public List<ReservarCitaDTO> obtenerReservasParaMensajePorIdEmpleadoSegunMes(Integer idEmpleado) {
-       Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.of(reservarCitaRepository.findAllByIdEmpleadoAndDayOfMonth(idEmpleado, LocalDate.now().getMonthValue()).stream().map(ReservarCitaDTO::ConvertToDTO).toList());
+        Optional<List<ReservarCitaDTO>> reservarCitaDTOList = Optional.of(reservarCitaRepository.findAllByIdEmpleadoAndDayOfMonth(idEmpleado, LocalDate.now().getMonthValue()).stream().map(ReservarCitaDTO::ConvertToDTO).toList());
         return reservarCitaDTOList.orElse(null);
     }
 
