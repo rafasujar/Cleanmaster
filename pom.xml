@@ -84,6 +84,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
+			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
 
@@ -115,6 +116,7 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>-->
+
 				</configuration>
 			</plugin>
 
@@ -125,6 +127,12 @@
 				<configuration>
 					<source>23</source>
 					<target>23</target>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</path>
+					</annotationProcessorPaths>
 					<compilerArgs>--enable-preview</compilerArgs>
 				</configuration>
 			</plugin>

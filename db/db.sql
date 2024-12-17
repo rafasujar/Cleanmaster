@@ -141,15 +141,18 @@ INSERT INTO `encargado` (`id`, `id_empleado`) VALUES
 --
 
 DROP TABLE IF EXISTS `mensaje`;
-CREATE TABLE `mensaje` (
-                           `id` int(11) NOT NULL,
-                           `id_cliente` int(11) DEFAULT NULL,
-                           `id_empleado` int(11) DEFAULT NULL,
-                           `asunto` varchar(100) DEFAULT NULL,
-                           `mensaje` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
+create  table  mensaje (
+                           id  int  not null auto_increment,
+                           id_receptor   int  not null,
+                           id_emisor  int  not null,
+                           asunto varchar ( 100 ) not null,
+                           mensaje  varchar ( 500 ) not null,
+                           primary key (id_mensaje),
+                           foreign key id_receptor references empleado(id_empleado),
+                           foreign key id_emisor references empleado(id_empleado),
+                           foreign key id_receptor references cliente(id_cliente),
+                           foreign key id_emisor references cliente(id_cliente)
+);
 
 --
 -- Estructura de tabla para la tabla `reservar_cita`
@@ -171,21 +174,6 @@ CREATE TABLE `reservar_cita` (
 -- Volcado de datos para la tabla `reservar_cita`
 --
 
-INSERT INTO `reservar_cita` (`id`, `id_cliente`, `id_empleado`, `fecha`, `id_tipo_servicio`, `id_direccion`, `finalizada_reserva`, `especificaciones`) VALUES
-                                                                                                                                                           (1, 1, 2, '2024-12-02', 1, 1, 1, 'Primera cita del día'),
-                                                                                                                                                           (2, 1, 2, '2024-12-02', 2, 1, 0, 'Segunda cita del día'),
-                                                                                                                                                           (3, 1, 2, '2024-12-03', 3, 1, 0, 'Primera cita del día'),
-                                                                                                                                                           (4, 1, 2, '2024-12-03', 4, 1, 0, 'Segunda cita del día'),
-                                                                                                                                                           (5, 1, 2, '2024-12-04', 5, 1, 0, 'Primera cita del día'),
-                                                                                                                                                           (6, 1, 2, '2024-12-04', 6, 1, 0, 'Segunda cita del día'),
-                                                                                                                                                           (7, 1, 2, '2024-12-05', 7, 1, 0, 'Primera cita del día'),
-                                                                                                                                                           (8, 1, 2, '2024-12-05', 8, 1, 0, 'Segunda cita del día'),
-                                                                                                                                                           (9, 1, 2, '2024-12-06', 9, 1, 0, 'Primera cita del día'),
-                                                                                                                                                           (10, 1, 2, '2024-12-06', 10, 1, 0, 'Segunda cita del día'),
-                                                                                                                                                           (11, 1, 2, '2024-12-07', 11, 1, 0, 'Primera cita del día'),
-                                                                                                                                                           (12, 1, 2, '2024-12-07', 12, 1, 0, 'Segunda cita del día'),
-                                                                                                                                                           (13, 1, 2, '2024-12-08', 13, 1, 0, 'Primera cita del día'),
-                                                                                                                                                           (14, 1, 2, '2024-12-08', 14, 1, 0, 'Segunda cita del día');
 
 -- --------------------------------------------------------
 
